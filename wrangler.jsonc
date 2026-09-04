@@ -9,7 +9,7 @@
     {
       "binding": "DB",
       "database_name": "income-outcome-db",
-      "database_id": "xxx-xxx-xxx", // Will be replaced by real ID in production
+      "database_id": "44e4c872-68ef-44d3-b707-f6d979631da4",
       "migrations_dir": "drizzle"
     }
   ]
