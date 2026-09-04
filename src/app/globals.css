@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  /* Default Theme: Minimal Sky */
+  --background: #ffffff;
+  --foreground: #334155;
+  --wood-light: #f1f5f9;
+  --wood-base: #7ba3c8;
+  --wood-dark: #475569;
+  --wood-xdark: #1e293b;
+  --muted: #94a3b8;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --danger: #fca5a5;
+  --success: #86efac;
+}
+
+.theme-cozy-wood {
+  /* Theme 2: Cozy Wood Cafe */
+  --background: #f5ede0;
+  --foreground: #3e2723;
+  --wood-light: #dfcbba;
+  --wood-base: #9c6644;
+  --wood-dark: #7a4b2f;
+  --wood-xdark: #4a2816;
+  --muted: #8c7a6b;
+  --border: #e6d3c3;
+  --card: #fcf9f2;
+  --danger: #d9534f;
+  --success: #5cb85c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-wood-light: var(--wood-light);
+  --color-wood-base: var(--wood-base);
+  --color-wood-dark: var(--wood-dark);
+  --color-wood-xdark: var(--wood-xdark);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
