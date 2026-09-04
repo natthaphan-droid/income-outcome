@@ -223,6 +223,8 @@ export async function getCategories(type?: "income" | "expense") {
 
   try {
     const db = await getDb();
+    if (!db) throw new Error("No DB");
+    
     const conditions = [eq(categories.userId, session.user.id)];
     if (type) conditions.push(eq(categories.type, type));
 
