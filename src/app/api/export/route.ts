@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { createDb } from "@/db";
 import { transactions, categories } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
@@ -15,7 +15,7 @@ export async function GET() {
 
   let env;
   try {
-    env = getRequestContext().env;
+    env = getCloudflareContext().env;
   } catch (e) {
     console.warn("No env");
   }

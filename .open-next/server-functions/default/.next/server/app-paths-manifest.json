@@ -1,0 +1,17 @@
+{
+  "/(protected)/add/page": "app/(protected)/add/page.js",
+  "/(protected)/categories/page": "app/(protected)/categories/page.js",
+  "/(protected)/notifications/page": "app/(protected)/notifications/page.js",
+  "/(protected)/page": "app/(protected)/page.js",
+  "/(protected)/recurring/page": "app/(protected)/recurring/page.js",
+  "/(protected)/reports/page": "app/(protected)/reports/page.js",
+  "/(protected)/settings/page": "app/(protected)/settings/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/export/route": "app/api/export/route.js",
+  "/changelog/page": "app/changelog/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/login/page": "app/login/page.js",
+  "/pin/page": "app/pin/page.js"
+}

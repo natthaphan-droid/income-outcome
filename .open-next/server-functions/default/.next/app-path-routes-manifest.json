@@ -1,0 +1,17 @@
+{
+  "/(protected)/add/page": "/add",
+  "/(protected)/categories/page": "/categories",
+  "/(protected)/notifications/page": "/notifications",
+  "/(protected)/page": "/",
+  "/(protected)/recurring/page": "/recurring",
+  "/(protected)/reports/page": "/reports",
+  "/(protected)/settings/page": "/settings",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
+  "/api/export/route": "/api/export",
+  "/changelog/page": "/changelog",
+  "/favicon.ico/route": "/favicon.ico",
+  "/login/page": "/login",
+  "/pin/page": "/pin"
+}

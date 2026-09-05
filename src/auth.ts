@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { createDb } from "./db";
 import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
@@ -24,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
           // Get Cloudflare context
           let env;
           try {
-            env = getRequestContext().env;
+            env = getCloudflareContext().env;
           } catch (e) {
             console.warn("Could not get Cloudflare env. Falling back to mock login for UI testing.");
           }

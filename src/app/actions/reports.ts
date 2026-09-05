@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { createDb } from "@/db";
 import { transactions, categories } from "@/db/schema";
 import { eq, and, gte, lt } from "drizzle-orm";
@@ -9,7 +9,7 @@ import { eq, and, gte, lt } from "drizzle-orm";
 async function getDb() {
   let env;
   try {
-    env = getRequestContext().env;
+    env = getCloudflareContext().env;
   } catch (e) {
     console.warn("Could not get Cloudflare env in reports action.");
   }
