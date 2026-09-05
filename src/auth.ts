@@ -7,7 +7,15 @@ import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
 
 export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
+  let env: any = {};
+  try {
+    env = getCloudflareContext().env;
+  } catch (e) {
+    env = process.env;
+  }
+
   return {
+    secret: env.AUTH_SECRET || process.env.AUTH_SECRET,
     session: {
       strategy: "jwt",
     },
