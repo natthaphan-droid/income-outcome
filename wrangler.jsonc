@@ -24,5 +24,8 @@
       "invocation_logs": true,
       "persist": true
     }
+  },
+  "vars": {
+    "AUTH_SECRET": "supersecret1234567890"
   }
 }
