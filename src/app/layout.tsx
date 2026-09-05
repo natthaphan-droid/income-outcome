@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Minimalist money tracker",
 };
 
-export const runtime = "edge";
+
 
 export default function RootLayout({
   children,

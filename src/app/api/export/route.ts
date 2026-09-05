@@ -5,7 +5,7 @@ import { createDb } from "@/db";
 import { transactions, categories } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 
-export const runtime = "edge";
+
 
 export async function GET() {
   const session = await auth();

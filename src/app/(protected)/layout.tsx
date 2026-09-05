@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { auth } from "@/auth";
 
-export const runtime = "edge";
+
 
 export default async function ProtectedLayout({
   children,
