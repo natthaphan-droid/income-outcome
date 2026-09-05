@@ -47,11 +47,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
           }
 
           const db = createDb(env as any);
-          const user = await db
+          let user = await db
             .select()
             .from(users)
             .where(eq(users.email, credentials.email as string))
             .get();
+
+          if (!user) {
+            // Check if DB is completely empty (no users at all)
+            const allUsers = await db.select().from(users).limit(1);
+            if (allUsers.length === 0) {
+              console.log("Database is empty. Bootstrapping first user...");
+              const passwordHash = await bcrypt.hash(credentials.password as string, 10);
+              const newUser = {
+                id: crypto.randomUUID(),
+                name: "Admin User",
+                email: credentials.email as string,
+                passwordHash,
+                emailVerified: new Date(),
+              };
+              await db.insert(users).values(newUser);
+              user = newUser as any;
+            } else {
+              return null; // Invalid credentials
+            }
+          }
 
           if (!user || !user.passwordHash) {
             return null;
