@@ -1,5 +1,4 @@
 "use client";
-
 import { signIn } from "next-auth/react";
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -66,4 +65,4 @@ export default function LoginPage() {
       </div>
     </div>
   );
-
+}
