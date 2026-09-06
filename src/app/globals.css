@@ -27,24 +27,24 @@
   --color-beige-900: #3b2e25;
   --color-beige-950: #211913;
 
-  /* Semantic Variables (60-30-10 Rule - Vibrant Light Theme) */
-  --color-background: var(--color-dino-400); /* 60% Dominant (Main Background) */
-  --color-foreground: var(--color-dino-950);
+  /* Semantic Variables (Minimal Clean Theme) */
+  --color-background: var(--color-dino-50); /* 60% Dominant (Very pale, clean background) */
+  --color-foreground: var(--color-dino-950); /* High contrast dark text */
   
-  --color-surface: var(--color-dino-300); /* Slightly darker/lighter for surfaces if needed */
+  --color-surface: var(--color-dino-100);
   --color-surface-foreground: var(--color-dino-950);
 
-  --color-card: var(--color-beige-50); /* 30% Secondary (Cards, Inputs - Light Beige/White) */
-  --color-card-foreground: var(--color-beige-950);
+  --color-card: #ffffff; /* 30% Secondary (Pure white cards for depth) */
+  --color-card-foreground: var(--color-dino-950);
 
-  --color-primary: var(--color-dino-900); /* 10% Accent (Buttons, Highlights - Dark Green) */
-  --color-primary-foreground: var(--color-dino-50); /* High contrast text on primary */
+  --color-primary: var(--color-dino-400); /* 10% Accent (Signature vibrant green) */
+  --color-primary-foreground: var(--color-dino-950); /* Dark text on bright button for contrast */
 
-  --color-muted: var(--color-dino-800);
-  --color-border: var(--color-dino-500);
+  --color-muted: #6b7280; /* Standard gray for secondary text */
+  --color-border: #e5e7eb; /* Soft minimal border */
   
   --color-danger: #ef4444;
-  --color-success: var(--color-dino-600);
+  --color-success: var(--color-dino-500);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
