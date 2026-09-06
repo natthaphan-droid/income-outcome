@@ -1,0 +1,1 @@
+({454:()=>{throw Error("Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):\nError: \n\nCaused by:\n    0: Failed to read source code from D:\\gemini\\income outcome\\src\\app\\sw.ts\n    1: stream did not contain valid UTF-8")}})[454]();

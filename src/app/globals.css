@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  /* Default Theme: Minimal Sky */
-  --background: #ffffff;
-  --foreground: #334155;
-  --wood-light: #f1f5f9;
-  --wood-base: #7ba3c8;
-  --wood-dark: #475569;
-  --wood-xdark: #1e293b;
-  --muted: #94a3b8;
-  --border: #e2e8f0;
+  /* Default Theme: Dino Pastel Green */
+  --background: #f2fbf5;
+  --foreground: #2d4a36;
+  --wood-light: #cdecd6;
+  --wood-base: #a8ddba; /* Primary */
+  --wood-dark: #6eb98c;
+  --wood-xdark: #3b7b55;
+  --muted: #80ad90;
+  --border: #bce4c8;
   --card: #ffffff;
-  --danger: #fca5a5;
-  --success: #86efac;
+  --danger: #ff8a8a;
+  --success: #67d692;
 }
 
 .theme-cozy-wood {

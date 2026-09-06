@@ -14,8 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Income Outcome Tracker",
+  title: "JustNavigate - Money Tracker",
   description: "Minimalist money tracker",
+  manifest: "/manifest.json",
 };
 
 

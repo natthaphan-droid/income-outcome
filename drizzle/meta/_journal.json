@@ -8,6 +8,13 @@
       "when": 1788539139213,
       "tag": "0000_crazy_skin",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788665562531,
+      "tag": "0001_warm_monster_badoon",
+      "breakpoints": true
     }
   ]
 }

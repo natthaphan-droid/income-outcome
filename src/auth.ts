@@ -28,6 +28,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
         },
         async authorize(credentials) {
           if (!credentials?.email || !credentials?.password) return null;
+          
+          const email = (credentials.email as string).toLowerCase();
 
           // Get Cloudflare context
           let env;
@@ -39,7 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
           
           if (!env?.DB) {
             // Mock login for local UI testing
-            if (credentials.email === "test@test.com" && credentials.password === "password") {
+            if (email === "test@test.com" && credentials.password === "password") {
               return { id: "mock-user-1", email: "test@test.com", name: "Test User" };
             }
             console.warn("DB not found and not using mock credentials.");
@@ -50,7 +52,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
           let user = await db
             .select()
             .from(users)
-            .where(eq(users.email, credentials.email as string))
+            .where(eq(users.email, email))
             .get();
 
           if (!user) {
@@ -62,7 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
               const newUser = {
                 id: crypto.randomUUID(),
                 name: "Admin User",
-                email: credentials.email as string,
+                email: email,
                 passwordHash,
                 emailVerified: new Date(),
               };

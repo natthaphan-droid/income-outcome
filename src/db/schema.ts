@@ -78,3 +78,12 @@ export const changelog = sqliteTable("changelog", {
   releaseDate: integer("release_date", { mode: "timestamp" }).notNull(),
   changes: text("changes").notNull(), // JSON or Markdown string
 });
+
+export const passwordResetTokens = sqliteTable("password_reset_tokens", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  token: text("token").notNull(),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  used: integer("used", { mode: "boolean" }).default(false),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+});
