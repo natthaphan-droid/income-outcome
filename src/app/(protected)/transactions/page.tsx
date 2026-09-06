@@ -17,7 +17,7 @@ export default async function TransactionsPage() {
   return (
     <div className="flex flex-col min-h-screen relative bg-background">
       {/* Header */}
-      <header className="px-6 py-8 rounded-b-3xl shadow-md border-b border-border/30 relative text-foreground z-10 bg-background">
+      <header className="px-6 py-8 rounded-b-3xl shadow-lg relative text-primary-foreground z-10 bg-primary">
         <h1 className="text-2xl font-bold">รายการทั้งหมด</h1>
         <p className="text-sm opacity-90 mt-1">ประวัติการรับ-จ่ายเงินของคุณ</p>
       </header>

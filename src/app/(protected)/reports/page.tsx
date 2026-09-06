@@ -8,7 +8,7 @@ export default async function ReportsPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background pb-20">
-      <header className="px-6 py-6 bg-card text-card-foreground border-b border-border sticky top-0 z-10">
+      <header className="px-6 py-6 bg-primary text-primary-foreground shadow-md sticky top-0 z-10">
         <h1 className="text-2xl font-bold text-foreground text-center">สรุปผลการเงิน</h1>
         <ReportView initialData={initialData} />
       </header>

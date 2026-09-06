@@ -19,7 +19,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen relative">
       {/* Header */}
-      <header className="px-6 py-8 rounded-b-3xl shadow-md border-b border-border/30 relative text-foreground z-10 bg-background">
+      <header className="px-6 py-8 rounded-b-3xl shadow-lg relative text-primary-foreground z-10 bg-primary">
         <div className="flex justify-between items-center mb-6">
           <div>
             <p className="text-sm opacity-90">ยินดีต้อนรับกลับมา</p>
@@ -111,8 +111,17 @@ export default async function DashboardPage() {
                 </div>
               ))
             ) : (
-              <div className="text-center p-6 text-muted text-sm bg-card text-card-foreground rounded-2xl border border-border">
-                ยังไม่มีรายการล่าสุด
+              <div className="text-center p-8 bg-card text-card-foreground rounded-2xl border border-border shadow-sm flex flex-col items-center justify-center gap-4">
+                <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-2">
+                  <Icons.Wallet className="w-8 h-8" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg mb-1">ยินดีต้อนรับ!</h3>
+                  <p className="text-sm text-muted">เริ่มต้นจดบันทึกรายรับ-รายจ่ายของคุณได้เลย</p>
+                </div>
+                <Link href="/add" className="mt-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-xl font-semibold shadow hover:scale-105 transition-transform inline-flex items-center gap-2">
+                  <Icons.Plus className="w-4 h-4" /> บันทึกรายการแรก
+                </Link>
               </div>
             )}
           </div>

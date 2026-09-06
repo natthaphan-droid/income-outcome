@@ -35,13 +35,13 @@ export default function AddTransactionPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="px-6 py-4 bg-card text-card-foreground border-b border-border flex items-center gap-4">
-        <button onClick={() => router.back()} className="text-foreground p-2 -ml-2 rounded-full hover:bg-surface text-surface-foreground">
+      <header className="px-6 py-4 bg-primary text-primary-foreground shadow-md flex items-center gap-4">
+        <button onClick={() => router.back()} className="text-primary-foreground p-2 -ml-2 rounded-full hover:bg-primary/80 transition-colors">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
         </button>
-        <h1 className="text-xl font-bold text-foreground">เพิ่มรายการใหม่</h1>
+        <h1 className="text-xl font-bold">เพิ่มรายการใหม่</h1>
       </header>
 
       <main className="flex-1 p-6">

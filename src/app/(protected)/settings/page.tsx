@@ -14,7 +14,7 @@ export default function SettingsPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background pb-20 transition-colors duration-300">
-      <header className="px-6 py-6 bg-card text-card-foreground border-b border-border sticky top-0 z-10">
+      <header className="px-6 py-6 bg-primary text-primary-foreground shadow-md sticky top-0 z-10">
         <h1 className="text-2xl font-bold text-foreground text-center">ตั้งค่า</h1>
       </header>
 

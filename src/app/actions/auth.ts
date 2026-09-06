@@ -1,7 +1,7 @@
-﻿"use server";
+"use server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { createDb } from "@/db";
-import { users, passwordResetTokens } from "@/db/schema";
+import { users, passwordResetTokens, categories } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
@@ -40,6 +40,18 @@ export async function registerUser(data: FormData) {
     passwordHash,
     name: name || "User",
   });
+
+  // Seed default categories for the new user
+  const defaultCategories = [
+    { id: crypto.randomUUID(), userId: id, name: "อาหาร", icon: "Food", type: "expense" },
+    { id: crypto.randomUUID(), userId: id, name: "เดินทาง", icon: "Transport", type: "expense" },
+    { id: crypto.randomUUID(), userId: id, name: "ช้อปปิ้ง", icon: "Shopping", type: "expense" },
+    { id: crypto.randomUUID(), userId: id, name: "บิลต่างๆ", icon: "Bill", type: "expense" },
+    { id: crypto.randomUUID(), userId: id, name: "เงินเดือน", icon: "Wallet", type: "income" },
+    { id: crypto.randomUUID(), userId: id, name: "รายได้พิเศษ", icon: "Wallet", type: "income" },
+  ];
+
+  await db.insert(categories).values(defaultCategories);
 
   return { success: true };
 }

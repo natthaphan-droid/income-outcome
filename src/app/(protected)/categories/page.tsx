@@ -179,8 +179,8 @@ export default function CategoriesPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col relative pb-20">
-      <header className="px-6 py-8 bg-background relative text-foreground z-10 border-b border-border/30">
-        <h1 className="text-2xl font-bold text-foreground">หมวดหมู่และงบ</h1>
+      <header className="px-6 py-8 bg-primary text-primary-foreground shadow-md relative z-10">
+        <h1 className="text-2xl font-bold">หมวดหมู่และงบ</h1>
         <p className="text-sm opacity-90 mt-1">จัดการหมวดหมู่และการตั้งงบประมาณรายเดือน</p>
       </header>
 
