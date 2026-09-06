@@ -105,7 +105,7 @@ export default function AddTransactionPage() {
                   onClick={() => setCategoryId(cat.id)}
                   className="flex flex-col items-center gap-2"
                 >
-                  <div className={`w-14 h-14 bg-card text-card-foreground border ${categoryId === cat.id ? 'border-[var(--wood-dark)] bg-surface text-surface-foreground' : 'border-border'} rounded-2xl flex items-center justify-center text-primary shadow-sm transition-colors`}>
+                  <div className={`w-14 h-14 bg-card text-card-foreground border ${categoryId === cat.id ? 'border-[foreground] bg-surface text-surface-foreground' : 'border-border'} rounded-2xl flex items-center justify-center text-primary shadow-sm transition-colors`}>
                     <div className="w-6 h-6">{cat.icon}</div>
                   </div>
                   <span className={`text-xs ${categoryId === cat.id ? 'text-foreground font-bold' : 'text-muted'}`}>{cat.label}</span>
@@ -120,7 +120,7 @@ export default function AddTransactionPage() {
               type="text"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="w-full px-4 py-3 bg-card text-card-foreground border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--wood-base)]"
+              className="w-full px-4 py-3 bg-card text-card-foreground border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-[primary]"
               placeholder="เช่น ค่ารถไฟฟ้า, กินข้าวกับเพื่อน..."
             />
           </div>

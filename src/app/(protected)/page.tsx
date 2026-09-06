@@ -16,9 +16,9 @@ export default async function DashboardPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <header className="px-6 py-8 bg-[var(--wood-base)] text-white rounded-b-3xl shadow-md">
+      <header className="px-6 py-8 rounded-b-3xl shadow-md border-b border-border/30 relative text-foreground z-10 bg-background">
         <div className="flex justify-between items-center mb-6">
           <div>
             <p className="text-sm opacity-90">ยินดีต้อนรับกลับมา</p>
@@ -37,13 +37,13 @@ export default async function DashboardPage() {
         
         {/* Quick summary */}
         <div className="flex gap-4 mt-6">
-          <div className="flex-1 bg-card text-card-foreground/10 rounded-xl p-3">
+          <div className="flex-1 bg-card text-card-foreground rounded-xl p-3 shadow-sm border border-border/50">
             <div className="text-xs opacity-90 mb-1 flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-success"></span> รายรับ (เดือนนี้)
             </div>
             <div className="font-semibold">฿ {data.totalIncome.toLocaleString()}</div>
           </div>
-          <div className="flex-1 bg-card text-card-foreground/10 rounded-xl p-3">
+          <div className="flex-1 bg-card text-card-foreground rounded-xl p-3 shadow-sm border border-border/50">
             <div className="text-xs opacity-90 mb-1 flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-danger"></span> รายจ่าย (เดือนนี้)
             </div>
@@ -57,11 +57,11 @@ export default async function DashboardPage() {
         {data.budgetAlerts.map((alert, idx) => {
           const dashoffset = 100 - alert.percentageLeft;
           return (
-            <div key={idx} className="bg-danger/10 border border-[var(--danger)]/20 rounded-2xl p-4 mb-6 flex gap-4 items-center">
+            <div key={idx} className="bg-danger/10 border border-[danger]/20 rounded-2xl p-4 mb-6 flex gap-4 items-center">
               <div className="w-12 h-12 relative shrink-0">
                 <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
-                  <circle cx="18" cy="18" r="16" fill="none" className="stroke-[var(--danger)]/20" strokeWidth="4" />
-                  <circle cx="18" cy="18" r="16" fill="none" className="stroke-[var(--danger)]" strokeWidth="4" strokeDasharray="100" strokeDashoffset={dashoffset} strokeLinecap="round" />
+                  <circle cx="18" cy="18" r="16" fill="none" className="stroke-[danger]/20" strokeWidth="4" />
+                  <circle cx="18" cy="18" r="16" fill="none" className="stroke-[danger]" strokeWidth="4" strokeDasharray="100" strokeDashoffset={dashoffset} strokeLinecap="round" />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-danger">
                   {Math.round(alert.percentageLeft)}%
@@ -110,7 +110,7 @@ export default async function DashboardPage() {
         </section>
 
         {/* Recent Transactions */}
-        <section>
+        <section className="border-t border-border/50 pt-8 mt-4">
           <div className="flex justify-between items-end mb-4">
             <h2 className="text-lg font-bold text-foreground">รายการล่าสุด</h2>
             <Link href="/transactions" className="text-sm text-primary">ดูทั้งหมด</Link>

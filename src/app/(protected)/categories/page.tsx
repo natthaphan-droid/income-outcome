@@ -70,7 +70,7 @@ export default function CategoriesPage() {
                           type="number"
                           value={editAmount}
                           onChange={(e) => setEditAmount(e.target.value)}
-                          className="w-24 border-b border-[var(--wood-base)] focus:outline-none text-sm bg-transparent"
+                          className="w-24 border-b border-[primary] focus:outline-none text-sm bg-transparent"
                           autoFocus
                         />
                       </div>
@@ -94,7 +94,7 @@ export default function CategoriesPage() {
                         setEditingId(cat.id);
                         setEditAmount(cat.budget.toString());
                       }}
-                      className="px-3 py-1 bg-surface text-surface-foreground text-foreground text-xs font-bold rounded-lg hover:bg-[var(--wood-base)] hover:text-white transition-colors"
+                      className="px-3 py-1 bg-surface text-surface-foreground text-foreground text-xs font-bold rounded-lg hover:bg-primary text-primary-foreground hover:text-white transition-colors"
                     >
                       ตั้งงบ
                     </button>

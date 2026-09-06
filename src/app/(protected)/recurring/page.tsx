@@ -18,7 +18,7 @@ export default function RecurringPage() {
       </header>
 
       <main className="p-6">
-        <button className="w-full py-4 mb-6 bg-card text-card-foreground border-2 border-dashed border-[var(--wood-base)] text-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-surface text-surface-foreground transition">
+        <button className="w-full py-4 mb-6 bg-card text-card-foreground border-2 border-dashed border-[primary] text-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-surface text-surface-foreground transition">
           <Icons.Plus className="w-5 h-5" />
           เพิ่มรายการอัตโนมัติ
         </button>

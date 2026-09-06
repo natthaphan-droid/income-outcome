@@ -29,7 +29,7 @@ export default function SettingsPage() {
               <div className="flex flex-col gap-3">
                 <button 
                   onClick={() => setTheme("minimal")}
-                  className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${theme === 'minimal' ? 'border-[var(--wood-base)] bg-surface text-surface-foreground' : 'border-border bg-background'}`}
+                  className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${theme === 'minimal' ? 'border-[primary] bg-surface text-surface-foreground' : 'border-border bg-background'}`}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#ffffff', border: '2px solid #7ba3c8' }}></div>
@@ -39,7 +39,7 @@ export default function SettingsPage() {
                 </button>
                 <button 
                   onClick={() => setTheme("theme-cozy-wood")}
-                  className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${theme === 'theme-cozy-wood' ? 'border-[var(--wood-base)] bg-surface text-surface-foreground' : 'border-border bg-background'}`}
+                  className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${theme === 'theme-cozy-wood' ? 'border-[primary] bg-surface text-surface-foreground' : 'border-border bg-background'}`}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#f5ede0', border: '2px solid #9c6644' }}></div>

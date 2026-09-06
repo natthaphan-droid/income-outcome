@@ -52,7 +52,7 @@ export default function PinPage() {
             <div
               key={i}
               className={`w-4 h-4 rounded-full transition-colors ${
-                i < pin.length ? "bg-[var(--wood-base)]" : "bg-[var(--border)]"
+                i < pin.length ? "bg-primary text-primary-foreground" : "bg-[border]"
               }`}
             />
           ))}
@@ -88,7 +88,7 @@ export default function PinPage() {
         <button
           onClick={handleSubmit}
           disabled={pin.length !== 6 || isPending}
-          className="w-full py-3 bg-[var(--wood-base)] disabled:bg-[var(--border)] disabled:text-muted text-white font-medium rounded-lg hover:bg-primary text-primary-foreground transition-colors"
+          className="w-full py-3 bg-primary text-primary-foreground disabled:bg-[border] disabled:text-muted text-white font-medium rounded-lg hover:bg-primary text-primary-foreground transition-colors"
         >
           {isPending ? "กำลังตรวจสอบ..." : "ยืนยัน"}
         </button>

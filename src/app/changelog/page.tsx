@@ -17,10 +17,10 @@ export default function ChangelogPage() {
       </header>
 
       <main className="p-6">
-        <div className="relative border-l-2 border-[var(--wood-base)] ml-4 space-y-10 pb-10">
+        <div className="relative border-l-2 border-[primary] ml-4 space-y-10 pb-10">
           
           <div className="relative pl-6">
-            <div className="absolute -left-2 top-1 w-4 h-4 bg-[var(--wood-base)] rounded-full border-4 border-[var(--background)]"></div>
+            <div className="absolute -left-2 top-1 w-4 h-4 bg-primary text-primary-foreground rounded-full border-4 border-[var(--background)]"></div>
             <div className="mb-1 text-sm text-foreground font-bold">เวอร์ชัน 1.0.0</div>
             <div className="mb-2 text-xs text-muted">4 กันยายน 2026</div>
             <div className="bg-card text-card-foreground p-4 rounded-xl border border-border shadow-sm">
