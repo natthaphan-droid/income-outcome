@@ -14,20 +14,7 @@
   --color-dino-900: #1a422c; /* 60% Background */
   --color-dino-950: #0e2518;
 
-  /* 9-Shade Muted Beige Scale */
-  --color-beige-50: #fdfaf6;
-  --color-beige-100: #f8f1e6;
-  --color-beige-200: #eee0cc;
-  --color-beige-300: #e2cbb1;
-  --color-beige-400: #d1ad8c;
-  --color-beige-500: #c1936c;
-  --color-beige-600: #ab7956;
-  --color-beige-700: #8f6045;
-  --color-beige-800: #4a3c31; /* 30% Surface */
-  --color-beige-900: #3b2e25;
-  --color-beige-950: #211913;
-
-  /* Semantic Variables (Strict 60-30-10 Minimal Theme) */
+  /* Semantic Variables (Strict 60-30-10 Monochromatic Green 400 Theme) */
   /* 60% Dominant (Main Background) */
   --color-background: var(--color-dino-400); 
   --color-foreground: var(--color-dino-950); 
@@ -35,19 +22,19 @@
   --color-surface: var(--color-dino-300);
   --color-surface-foreground: var(--color-dino-950);
 
-  /* 30% Secondary (Surfaces & Cards) */
-  --color-card: #ffffff; 
+  /* 30% Secondary (Surfaces & Cards) - using the lightest green tone */
+  --color-card: var(--color-dino-50); 
   --color-card-foreground: var(--color-dino-950);
 
-  /* 10% Accent (Buttons & Call to Actions) */
+  /* 10% Accent (Buttons & Call to Actions) - using the darkest green tone */
   --color-primary: var(--color-dino-900); 
-  --color-primary-foreground: #ffffff; 
+  --color-primary-foreground: var(--color-dino-50); 
 
   --color-muted: var(--color-dino-800); 
-  --color-border: var(--color-dino-500); 
+  --color-border: var(--color-dino-600); 
   
-  --color-danger: #ef4444;
-  --color-success: var(--color-dino-700);
+  --color-danger: #ef4444; /* Keep red for destructive actions */
+  --color-success: var(--color-dino-600);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
