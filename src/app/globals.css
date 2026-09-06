@@ -27,24 +27,24 @@
   --color-beige-900: #3b2e25;
   --color-beige-950: #211913;
 
-  /* Semantic Variables (60-30-10 Rule) */
-  --color-background: var(--color-dino-950); /* Darkest for app background */
-  --color-foreground: var(--color-dino-50);
+  /* Semantic Variables (60-30-10 Rule - Vibrant Light Theme) */
+  --color-background: var(--color-dino-400); /* 60% Dominant (Main Background) */
+  --color-foreground: var(--color-dino-950);
   
-  --color-surface: var(--color-dino-900); /* 60% Dominant (Main Content Background) */
-  --color-surface-foreground: var(--color-dino-50);
+  --color-surface: var(--color-dino-300); /* Slightly darker/lighter for surfaces if needed */
+  --color-surface-foreground: var(--color-dino-950);
 
-  --color-card: var(--color-beige-800); /* 30% Secondary (Cards, Inputs) */
-  --color-card-foreground: var(--color-beige-50);
+  --color-card: var(--color-beige-50); /* 30% Secondary (Cards, Inputs - Light Beige/White) */
+  --color-card-foreground: var(--color-beige-950);
 
-  --color-primary: var(--color-dino-400); /* 10% Accent (Buttons, Highlights) */
-  --color-primary-foreground: var(--color-dino-950); /* High contrast text on primary */
+  --color-primary: var(--color-dino-900); /* 10% Accent (Buttons, Highlights - Dark Green) */
+  --color-primary-foreground: var(--color-dino-50); /* High contrast text on primary */
 
-  --color-muted: var(--color-beige-600);
-  --color-border: var(--color-dino-800);
+  --color-muted: var(--color-dino-800);
+  --color-border: var(--color-dino-500);
   
   --color-danger: #ef4444;
-  --color-success: var(--color-dino-400);
+  --color-success: var(--color-dino-600);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
