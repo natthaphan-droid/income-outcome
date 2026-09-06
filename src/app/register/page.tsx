@@ -31,18 +31,18 @@ export default function Register() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="mb-1 block text-sm font-medium">ชื่อ</label>
-            <input type="text" name="name" required className="w-full rounded-2xl border px-4 py-3 bg-wood-light/20 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="ชื่อของคุณ" />
+            <input type="text" name="name" required className="w-full rounded-2xl border px-4 py-3 bg-background text-foreground border-border focus:outline-none focus:ring-2 focus:ring-primary" placeholder="ชื่อของคุณ" />
           </div>
           <div>
             <label className="mb-1 block text-sm font-medium">อีเมล</label>
-            <input type="email" name="email" required className="w-full rounded-2xl border px-4 py-3 bg-wood-light/20 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="you@example.com" />
+            <input type="email" name="email" required className="w-full rounded-2xl border px-4 py-3 bg-background text-foreground border-border focus:outline-none focus:ring-2 focus:ring-primary" placeholder="you@example.com" />
           </div>
           <div>
             <label className="mb-1 block text-sm font-medium">รหัสผ่าน</label>
-            <input type="password" name="password" required className="w-full rounded-2xl border px-4 py-3 bg-wood-light/20 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••" />
+            <input type="password" name="password" required className="w-full rounded-2xl border px-4 py-3 bg-background text-foreground border-border focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••" />
           </div>
-          {error && <div className="text-sm text-red-500 bg-red-100 p-2 rounded-xl text-center">{error}</div>}
-          <button type="submit" className="mt-2 w-full rounded-2xl bg-primary py-3 font-semibold text-white hover:bg-primary-dark transition shadow-md">สมัครสมาชิก</button>
+          {error && <div className="text-sm bg-danger/20 text-danger p-2 rounded-xl text-center">{error}</div>}
+          <button type="submit" className="mt-2 w-full rounded-2xl bg-primary py-3 font-semibold text-primary-foreground hover:bg-dino-500 transition shadow-md">สมัครสมาชิก</button>
         </form>
         <p className="mt-6 text-center text-sm text-muted">
           มีบัญชีอยู่แล้ว?{" "}

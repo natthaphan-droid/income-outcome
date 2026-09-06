@@ -1,53 +1,59 @@
 @import "tailwindcss";
 
-:root {
-  /* Default Theme: Dino Pastel Green */
-  --background: #f2fbf5;
-  --foreground: #2d4a36;
-  --wood-light: #cdecd6;
-  --wood-base: #a8ddba; /* Primary */
-  --wood-dark: #6eb98c;
-  --wood-xdark: #3b7b55;
-  --muted: #80ad90;
-  --border: #bce4c8;
-  --card: #ffffff;
-  --danger: #ff8a8a;
-  --success: #67d692;
-}
-
-.theme-cozy-wood {
-  /* Theme 2: Cozy Wood Cafe */
-  --background: #f5ede0;
-  --foreground: #3e2723;
-  --wood-light: #dfcbba;
-  --wood-base: #9c6644;
-  --wood-dark: #7a4b2f;
-  --wood-xdark: #4a2816;
-  --muted: #8c7a6b;
-  --border: #e6d3c3;
-  --card: #fcf9f2;
-  --danger: #d9534f;
-  --success: #5cb85c;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-wood-light: var(--wood-light);
-  --color-wood-base: var(--wood-base);
-  --color-wood-dark: var(--wood-dark);
-  --color-wood-xdark: var(--wood-xdark);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
-  --color-card: var(--card);
-  --color-danger: var(--danger);
-  --color-success: var(--success);
+  /* 9-Shade Dino Green Scale */
+  --color-dino-50: #f0fbf4;
+  --color-dino-100: #dcf5e5;
+  --color-dino-200: #bdeacb;
+  --color-dino-300: #90d8a8;
+  --color-dino-400: #5ec182; /* 10% Accent */
+  --color-dino-500: #3b9e61;
+  --color-dino-600: #2a7e4b;
+  --color-dino-700: #23653e;
+  --color-dino-800: #1f5034;
+  --color-dino-900: #1a422c; /* 60% Background */
+  --color-dino-950: #0e2518;
+
+  /* 9-Shade Muted Beige Scale */
+  --color-beige-50: #fdfaf6;
+  --color-beige-100: #f8f1e6;
+  --color-beige-200: #eee0cc;
+  --color-beige-300: #e2cbb1;
+  --color-beige-400: #d1ad8c;
+  --color-beige-500: #c1936c;
+  --color-beige-600: #ab7956;
+  --color-beige-700: #8f6045;
+  --color-beige-800: #4a3c31; /* 30% Surface */
+  --color-beige-900: #3b2e25;
+  --color-beige-950: #211913;
+
+  /* Semantic Variables (60-30-10 Rule) */
+  --color-background: var(--color-dino-950); /* Darkest for app background */
+  --color-foreground: var(--color-dino-50);
+  
+  --color-surface: var(--color-dino-900); /* 60% Dominant (Main Content Background) */
+  --color-surface-foreground: var(--color-dino-50);
+
+  --color-card: var(--color-beige-800); /* 30% Secondary (Cards, Inputs) */
+  --color-card-foreground: var(--color-beige-50);
+
+  --color-primary: var(--color-dino-400); /* 10% Accent (Buttons, Highlights) */
+  --color-primary-foreground: var(--color-dino-950); /* High contrast text on primary */
+
+  --color-muted: var(--color-beige-600);
+  --color-border: var(--color-dino-800);
+  
+  --color-danger: #ef4444;
+  --color-success: var(--color-dino-400);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+

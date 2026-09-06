@@ -36,10 +36,10 @@ function ResetPasswordForm() {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div>
         <label className="mb-1 block text-sm font-medium">รหัสผ่านใหม่</label>
-        <input type="password" name="password" required className="w-full rounded-2xl border px-4 py-3 bg-wood-light/20 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••" minLength={6} />
+        <input type="password" name="password" required className="w-full rounded-2xl border px-4 py-3 bg-background text-foreground border-border focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••" minLength={6} />
       </div>
-      {error && <div className="text-sm text-red-500 bg-red-100 p-2 rounded-xl text-center">{error}</div>}
-      <button type="submit" className="mt-2 w-full rounded-2xl bg-primary py-3 font-semibold text-white hover:bg-primary-dark transition shadow-md">บันทึกรหัสผ่านใหม่</button>
+      {error && <div className="text-sm bg-danger/20 text-danger p-2 rounded-xl text-center">{error}</div>}
+      <button type="submit" className="mt-2 w-full rounded-2xl bg-primary py-3 font-semibold text-primary-foreground hover:bg-dino-500 transition shadow-md">บันทึกรหัสผ่านใหม่</button>
     </form>
   );
 }
