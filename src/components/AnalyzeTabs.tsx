@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const data = [
   { name: 'ม.ค.', income: 40000, expense: 24000, savings: 16000 },
@@ -12,113 +11,90 @@ const data = [
   { name: 'มิ.ย.', income: 39000, expense: 21000, savings: 18000 },
 ];
 
-export function AnalyzeTabs() {
-  const [activeTab, setActiveTab] = useState<"income" | "expense" | "savings">("income");
+// Summary cards data
+const totalIncome = data.reduce((sum, d) => sum + d.income, 0);
+const totalExpense = data.reduce((sum, d) => sum + d.expense, 0);
+const totalSavings = data.reduce((sum, d) => sum + d.savings, 0);
 
+export function AnalyzeTabs() {
   return (
     <div className="flex flex-col h-full">
-      {/* Tabs */}
-      <div className="flex p-1 bg-surface rounded-xl mb-6">
-        <button
-          onClick={() => setActiveTab("income")}
-          className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${
-            activeTab === "income" ? "bg-card text-success shadow-sm" : "text-muted hover:text-foreground"
-          }`}
-        >
-          รายรับ
-        </button>
-        <button
-          onClick={() => setActiveTab("expense")}
-          className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${
-            activeTab === "expense" ? "bg-card text-danger shadow-sm" : "text-muted hover:text-foreground"
-          }`}
-        >
-          รายจ่าย
-        </button>
-        <button
-          onClick={() => setActiveTab("savings")}
-          className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${
-            activeTab === "savings" ? "bg-card text-primary shadow-sm" : "text-muted hover:text-foreground"
-          }`}
-        >
-          เงินออม
-        </button>
+      {/* Summary Cards */}
+      <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="bg-card border border-border/50 rounded-xl p-3 shadow-sm">
+          <div className="text-[10px] text-muted mb-1 flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-[#10b981]"></span> รายรับ
+          </div>
+          <div className="font-bold text-sm text-success">฿{totalIncome.toLocaleString()}</div>
+        </div>
+        <div className="bg-card border border-border/50 rounded-xl p-3 shadow-sm">
+          <div className="text-[10px] text-muted mb-1 flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-[#ef4444]"></span> รายจ่าย
+          </div>
+          <div className="font-bold text-sm text-danger">฿{totalExpense.toLocaleString()}</div>
+        </div>
+        <div className="bg-card border border-border/50 rounded-xl p-3 shadow-sm">
+          <div className="text-[10px] text-muted mb-1 flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-[#3b82f6]"></span> เงินออม
+          </div>
+          <div className="font-bold text-sm text-primary">฿{totalSavings.toLocaleString()}</div>
+        </div>
       </div>
 
-      {/* Chart Section */}
-      <div className="bg-card border border-border/50 rounded-2xl p-4 mb-6 h-72">
-        <h3 className="text-sm font-bold text-foreground mb-4">
-          เปรียบเทียบ{activeTab === 'income' ? 'รายรับ' : activeTab === 'expense' ? 'รายจ่าย' : 'เงินออม'}รายเดือน
-        </h3>
-        <div className="h-52">
+      {/* Combined Comparison Chart */}
+      <div className="bg-card border border-border/50 rounded-2xl p-4 mb-6">
+        <h3 className="text-sm font-bold text-foreground mb-4">เปรียบเทียบรายรับ รายจ่าย เงินออม รายเดือน</h3>
+        <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
-            {activeTab === 'savings' ? (
-              <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--muted)' }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--muted)' }} />
-                <Tooltip 
-                  cursor={{ fill: 'var(--surface)' }}
-                  contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)', backgroundColor: 'var(--card)', color: 'var(--card-foreground)' }}
-                  formatter={(value: any) => [`฿ ${value.toLocaleString()}`, 'จำนวนเงิน']}
-                />
-                <Line type="monotone" dataKey="savings" stroke="var(--primary)" strokeWidth={3} dot={{ fill: 'var(--primary)', strokeWidth: 2 }} />
-              </LineChart>
-            ) : (
-              <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--muted)' }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--muted)' }} />
-                <Tooltip 
-                  cursor={{ fill: 'var(--surface)' }}
-                  contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)', backgroundColor: 'var(--card)', color: 'var(--card-foreground)' }}
-                  formatter={(value: any) => [`฿ ${value.toLocaleString()}`, 'จำนวนเงิน']}
-                />
-                <Bar 
-                  dataKey={activeTab} 
-                  fill={activeTab === 'income' ? '#10b981' : '#ef4444'} 
-                  radius={[4, 4, 0, 0]} 
-                  barSize={30}
-                />
-              </BarChart>
-            )}
+            <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--muted)' }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--muted)' }} />
+              <Tooltip
+                cursor={{ fill: 'var(--surface)', opacity: 0.5 }}
+                contentStyle={{ borderRadius: '12px', border: '1px solid var(--border)', backgroundColor: 'var(--card)', color: 'var(--card-foreground)', fontSize: '12px' }}
+                formatter={(value: any, name: any) => {
+                  const label = name === 'income' ? 'รายรับ' : name === 'expense' ? 'รายจ่าย' : 'เงินออม';
+                  return [`฿ ${value.toLocaleString()}`, label];
+                }}
+              />
+              <Legend 
+                verticalAlign="top" 
+                height={36}
+                iconType="circle"
+                formatter={(value: string) => {
+                  const label = value === 'income' ? 'รายรับ' : value === 'expense' ? 'รายจ่าย' : 'เงินออม';
+                  return <span style={{ fontSize: '12px', color: 'var(--foreground)' }}>{label}</span>;
+                }}
+              />
+              <Bar dataKey="income" fill="#10b981" radius={[4, 4, 0, 0]} barSize={16} />
+              <Bar dataKey="expense" fill="#ef4444" radius={[4, 4, 0, 0]} barSize={16} />
+              <Bar dataKey="savings" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={16} />
+            </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* List Section */}
+      {/* Monthly breakdown list */}
       <div className="flex-1">
-        <h3 className="text-lg font-bold text-foreground mb-4">
-          รายการ{activeTab === 'income' ? 'รับ' : activeTab === 'expense' ? 'จ่าย' : 'ออม'}สูงสุด
-        </h3>
+        <h3 className="text-lg font-bold text-foreground mb-4">รายละเอียดรายเดือน</h3>
         <div className="space-y-3">
-          {/* Mock data for list */}
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="bg-card text-card-foreground p-4 rounded-2xl border border-border flex items-center justify-between shadow-sm">
-              <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  activeTab === 'income' ? 'bg-success/10 text-success' : 
-                  activeTab === 'expense' ? 'bg-danger/10 text-danger' : 
-                  'bg-primary/10 text-primary'
-                }`}>
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
+          {[...data].reverse().map((month) => (
+            <div key={month.name} className="bg-card text-card-foreground p-4 rounded-2xl border border-border shadow-sm">
+              <div className="font-bold text-sm text-foreground mb-3">{month.name}</div>
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <div>
+                  <div className="text-[10px] text-muted mb-0.5">รายรับ</div>
+                  <div className="font-semibold text-sm text-success">+฿{month.income.toLocaleString()}</div>
                 </div>
                 <div>
-                  <h4 className="font-medium text-sm">
-                    {activeTab === 'income' ? 'เงินเดือน' : activeTab === 'expense' ? 'ค่าอาหาร' : 'เงินเก็บไปเที่ยว'}
-                  </h4>
-                  <p className="text-xs text-muted">มิถุนายน</p>
+                  <div className="text-[10px] text-muted mb-0.5">รายจ่าย</div>
+                  <div className="font-semibold text-sm text-danger">-฿{month.expense.toLocaleString()}</div>
                 </div>
-              </div>
-              <div className={`font-semibold ${
-                activeTab === 'income' ? 'text-success' : 
-                activeTab === 'expense' ? 'text-danger' : 
-                'text-primary'
-              }`}>
-                {activeTab === 'income' ? '+' : activeTab === 'expense' ? '-' : '+'}
-                ฿{(15000 / item).toLocaleString()}
+                <div>
+                  <div className="text-[10px] text-muted mb-0.5">เงินออม</div>
+                  <div className="font-semibold text-sm text-primary">฿{month.savings.toLocaleString()}</div>
+                </div>
               </div>
             </div>
           ))}
