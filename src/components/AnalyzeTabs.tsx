@@ -51,8 +51,17 @@ export function AnalyzeTabs() {
               <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--muted)' }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--muted)' }} />
               <Tooltip
-                cursor={{ fill: 'var(--surface)', opacity: 0.5 }}
-                contentStyle={{ borderRadius: '12px', border: '1px solid var(--border)', backgroundColor: 'var(--card)', color: 'var(--card-foreground)', fontSize: '12px' }}
+                cursor={{ fill: '#dcf5e5', opacity: 0.5 }}
+                contentStyle={{
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  backgroundColor: '#ffffff',
+                  color: '#0e2518',
+                  fontSize: '12px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                }}
+                labelStyle={{ color: '#0e2518', fontWeight: 'bold' }}
+                itemStyle={{ color: '#0e2518' }}
                 formatter={(value: any, name: any) => {
                   const label = name === 'income' ? 'รายรับ' : name === 'expense' ? 'รายจ่าย' : 'เงินออม';
                   return [`฿ ${value.toLocaleString()}`, label];

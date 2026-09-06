@@ -37,8 +37,17 @@ export function ExpenseDonutChart({ data }: ExpenseDonutChartProps) {
               ))}
             </Pie>
             <Tooltip 
-              formatter={(value: any) => `฿ ${value.toLocaleString()}`}
-              contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)', backgroundColor: 'var(--card)', color: 'var(--card-foreground)' }}
+              formatter={(value: any) => `฿ ${Number(value).toLocaleString()}`}
+              contentStyle={{
+                borderRadius: '12px',
+                border: '1px solid #e5e7eb',
+                backgroundColor: '#ffffff',
+                color: '#0e2518',
+                fontSize: '12px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              }}
+              itemStyle={{ color: '#0e2518' }}
+              labelStyle={{ color: '#0e2518', fontWeight: 'bold' }}
             />
             <Legend verticalAlign="bottom" height={36} iconType="circle" />
           </PieChart>

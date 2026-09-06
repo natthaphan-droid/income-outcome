@@ -8,12 +8,11 @@ export default async function DashboardPage() {
   
   // Dynamic icons mapping
   const getIcon = (iconName: string | null) => {
-    switch(iconName) {
-      case "Food": return <Icons.Food className="w-5 h-5" />;
-      case "Transport": return <Icons.Transport className="w-5 h-5" />;
-      case "Shopping": return <Icons.Shopping className="w-5 h-5" />;
-      default: return <Icons.Wallet className="w-5 h-5" />;
+    if (iconName && (Icons as any)[iconName]) {
+      const IconComponent = (Icons as any)[iconName];
+      return <IconComponent className="w-5 h-5" />;
     }
+    return <Icons.Wallet className="w-5 h-5" />;
   };
 
   return (

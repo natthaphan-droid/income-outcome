@@ -15,7 +15,27 @@ export default function CategoriesPage() {
   const [newCatIcon, setNewCatIcon] = useState("Wallet");
   const [newCatType, setNewCatType] = useState<"income" | "expense">("expense");
 
-  const availableIcons = ["Food", "Transport", "Shopping", "Wallet", "List", "Activity"];
+  const availableIcons = [
+    "Food", "Coffee", "Utensils", "Wine", "IceCream",
+    "Transport", "Car", "Fuel", "Plane", "Train", "Bike", "MapPin",
+    "Shopping", "ShoppingCart", "Gift", "Shirt", "Tag",
+    "HouseRent", "Electricity", "Water", "Laundry",
+    "Heart", "Hospital", "Dumbbell", "Pill",
+    "Gamepad", "Music", "Film", "Tv", "Camera", "Headphones",
+    "Book", "GraduationCap",
+    "Smartphone", "Wifi", "Laptop",
+    "Scissors", "Sparkles", "Flower",
+    "PawPrint", "Baby", "Users",
+    "Shield", "Receipt", "HandHeart", "Subscription", "Wrench",
+    "Briefcase", "Banknote", "CreditCard", "Wallet", "Savings",
+    "Star", "Clock", "Calendar",
+  ];
+
+  const getIcon = (iconName: string) => {
+    const IconComponent = (Icons as any)[iconName];
+    if (IconComponent) return <IconComponent className="w-5 h-5" />;
+    return <Icons.Wallet className="w-5 h-5" />;
+  };
 
   const loadData = () => {
     setLoading(true);
@@ -52,17 +72,6 @@ export default function CategoriesPage() {
     if (confirm("คุณต้องการลบหมวดหมู่นี้ใช่หรือไม่?")) {
       await deleteCategory(id);
       loadData();
-    }
-  };
-
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case "Food": return <Icons.Food className="w-5 h-5" />;
-      case "Transport": return <Icons.Transport className="w-5 h-5" />;
-      case "Shopping": return <Icons.Shopping className="w-5 h-5" />;
-      case "List": return <Icons.List className="w-5 h-5" />;
-      case "Activity": return <Icons.Activity className="w-5 h-5" />;
-      default: return <Icons.Wallet className="w-5 h-5" />;
     }
   };
 
