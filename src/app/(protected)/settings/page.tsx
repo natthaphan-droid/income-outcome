@@ -27,26 +27,26 @@ export default function SettingsPage() {
             <p className="text-sm text-muted mb-3">เลือกบรรยากาศที่คุณชื่นชอบ</p>
             {mounted && (
               <div className="flex flex-col gap-3">
-                <button 
-                  onClick={() => setTheme("minimal")}
-                  className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${theme === 'minimal' ? 'border-[primary] bg-surface text-surface-foreground' : 'border-border bg-background'}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#ffffff', border: '2px solid #7ba3c8' }}></div>
-                    <span className={`text-sm font-medium ${theme === 'minimal' ? 'text-foreground' : 'text-foreground'}`}>Minimal Sky (ฟ้าหม่น สะอาดตา)</span>
-                  </div>
-                  {theme === 'minimal' && <Icons.Plus className="w-5 h-5 text-primary rotate-45" />}
-                </button>
-                <button 
-                  onClick={() => setTheme("theme-cozy-wood")}
-                  className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${theme === 'theme-cozy-wood' ? 'border-[primary] bg-surface text-surface-foreground' : 'border-border bg-background'}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#f5ede0', border: '2px solid #9c6644' }}></div>
-                    <span className={`text-sm font-medium ${theme === 'theme-cozy-wood' ? 'text-foreground' : 'text-foreground'}`}>Cozy Wood Cafe (โฮมมี่ อบอุ่น)</span>
-                  </div>
-                  {theme === 'theme-cozy-wood' && <Icons.Plus className="w-5 h-5 text-primary rotate-45" />}
-                </button>
+                {[
+                  { id: 'theme-dino-green', name: 'Dino Green (สีเขียวสดใส)', bg: '#5ec182', border: '#1a422c' },
+                  { id: 'theme-minimal-sky', name: 'Minimal Sky (ฟ้าหม่น สะอาดตา)', bg: '#e0f2fe', border: '#0284c7' },
+                  { id: 'theme-cozy-wood', name: 'Cozy Wood Cafe (โฮมมี่ อบอุ่น)', bg: '#f5ebe0', border: '#8b5e34' },
+                  { id: 'theme-dark', name: 'Dark Mode (โหมดกลางคืน ถนอมสายตา)', bg: '#0f172a', border: '#3b82f6' },
+                  { id: 'theme-sakura-pink', name: 'Sakura Pink (ชมพูพาสเทล น่ารัก)', bg: '#fce7f3', border: '#db2777' },
+                  { id: 'theme-ocean-deep', name: 'Ocean Deep (น้ำเงินเข้ม สุขุม)', bg: '#172554', border: '#3b82f6' }
+                ].map((t) => (
+                  <button 
+                    key={t.id}
+                    onClick={() => setTheme(t.id)}
+                    className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${theme === t.id || (!theme && t.id === 'theme-dino-green') ? 'border-[primary] bg-surface text-surface-foreground' : 'border-border bg-background'}`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full" style={{ backgroundColor: t.bg, border: `2px solid ${t.border}` }}></div>
+                      <span className={`text-sm font-medium ${theme === t.id || (!theme && t.id === 'theme-dino-green') ? 'text-foreground' : 'text-foreground'}`}>{t.name}</span>
+                    </div>
+                    {(theme === t.id || (!theme && t.id === 'theme-dino-green')) && <Icons.Plus className="w-5 h-5 text-primary rotate-45" />}
+                  </button>
+                ))}
               </div>
             )}
           </div>

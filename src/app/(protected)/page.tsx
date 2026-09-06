@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getDashboardData } from "@/app/actions/transactions";
 import { ExpenseDonutChart } from "@/components/ExpenseDonutChart";
 import { BudgetWarningPopup } from "@/components/BudgetWarningPopup";
+import { TransactionItem } from "@/components/TransactionItem";
 
 export default async function DashboardPage() {
   const data = await getDashboardData();
@@ -93,22 +94,7 @@ export default async function DashboardPage() {
           <div className="space-y-3">
             {data.recentTransactions.length > 0 ? (
               data.recentTransactions.map((tx: any, idx: number) => (
-                <div key={idx} className="bg-card text-card-foreground p-4 rounded-2xl border border-border flex items-center justify-between shadow-sm">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-surface text-surface-foreground flex items-center justify-center text-foreground">
-                      {getIcon(tx.categoryIcon)}
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-sm">{tx.note || tx.categoryName || (tx.type === 'income' ? 'รายรับ' : 'รายจ่าย')}</h4>
-                      <p className="text-xs text-muted">
-                        {new Date(tx.date).toLocaleDateString('th-TH')} {new Date(tx.date).toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'})}
-                      </p>
-                    </div>
-                  </div>
-                  <div className={`font-semibold ${tx.type === 'income' ? 'text-success' : 'text-danger'}`}>
-                    {tx.type === 'income' ? '+' : '-'}฿{tx.amount.toLocaleString()}
-                  </div>
-                </div>
+                <TransactionItem key={idx} tx={tx} />
               ))
             ) : (
               <div className="text-center p-8 bg-card text-card-foreground rounded-2xl border border-border shadow-sm flex flex-col items-center justify-center gap-4">

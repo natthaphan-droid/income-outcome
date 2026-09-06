@@ -1,40 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* 9-Shade Dino Green Scale */
-  --color-dino-50: #f0fbf4;
-  --color-dino-100: #dcf5e5;
-  --color-dino-200: #bdeacb;
-  --color-dino-300: #90d8a8;
-  --color-dino-400: #5ec182; /* 10% Accent */
-  --color-dino-500: #3b9e61;
-  --color-dino-600: #2a7e4b;
-  --color-dino-700: #23653e;
-  --color-dino-800: #1f5034;
-  --color-dino-900: #1a422c; /* 60% Background */
-  --color-dino-950: #0e2518;
-
-  /* Semantic Variables (Strict 60-30-10 Monochromatic Green 400 Theme) */
-  /* 60% Dominant (Main Background) */
-  --color-background: var(--color-dino-400); 
-  --color-foreground: var(--color-dino-950); 
-  
-  --color-surface: var(--color-dino-300);
-  --color-surface-foreground: var(--color-dino-950);
-
-  /* 30% Secondary (Surfaces & Cards) - using the lightest green tone */
-  --color-card: var(--color-dino-50); 
-  --color-card-foreground: var(--color-dino-950);
-
-  /* 10% Accent (Buttons & Call to Actions) - using the darkest green tone */
-  --color-primary: var(--color-dino-900); 
-  --color-primary-foreground: var(--color-dino-50); 
-
-  --color-muted: var(--color-dino-800); 
-  --color-border: var(--color-dino-600); 
-  
-  --color-danger: #ef4444; /* Keep red for destructive actions */
-  --color-success: var(--color-dino-600);
+  --color-background: var(--theme-background); 
+  --color-foreground: var(--theme-foreground); 
+  --color-surface: var(--theme-surface);
+  --color-surface-foreground: var(--theme-surface-foreground);
+  --color-card: var(--theme-card); 
+  --color-card-foreground: var(--theme-card-foreground);
+  --color-primary: var(--theme-primary); 
+  --color-primary-foreground: var(--theme-primary-foreground); 
+  --color-muted: var(--theme-muted); 
+  --color-border: var(--theme-border); 
+  --color-danger: var(--theme-danger); 
+  --color-success: var(--theme-success);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -52,12 +30,107 @@
   }
 }
 
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+/* 1. Dino Green (Default) */
+:root, .theme-dino-green {
+  --theme-background: #5ec182; 
+  --theme-foreground: #0e2518; 
+  --theme-surface: #90d8a8;
+  --theme-surface-foreground: #0e2518;
+  --theme-card: #f0fbf4; 
+  --theme-card-foreground: #0e2518;
+  --theme-primary: #1a422c; 
+  --theme-primary-foreground: #f0fbf4; 
+  --theme-muted: #1f5034; 
+  --theme-border: #2a7e4b; 
+  --theme-danger: #ef4444; 
+  --theme-success: #2a7e4b;
 }
 
+/* 2. Minimal Sky */
+.theme-minimal-sky {
+  --theme-background: #e0f2fe;
+  --theme-foreground: #0c4a6e;
+  --theme-surface: #bae6fd;
+  --theme-surface-foreground: #0c4a6e;
+  --theme-card: #ffffff;
+  --theme-card-foreground: #0c4a6e;
+  --theme-primary: #0284c7;
+  --theme-primary-foreground: #ffffff;
+  --theme-muted: #475569;
+  --theme-border: #7dd3fc;
+  --theme-danger: #ef4444;
+  --theme-success: #16a34a;
+}
+
+/* 3. Cozy Wood Cafe */
+.theme-cozy-wood {
+  --theme-background: #f5ebe0;
+  --theme-foreground: #4e3629;
+  --theme-surface: #e3d5ca;
+  --theme-surface-foreground: #4e3629;
+  --theme-card: #fffcf8;
+  --theme-card-foreground: #4e3629;
+  --theme-primary: #8b5e34;
+  --theme-primary-foreground: #fffcf8;
+  --theme-muted: #7f5539;
+  --theme-border: #d4a373;
+  --theme-danger: #e07a5f;
+  --theme-success: #81b29a;
+}
+
+/* 4. Dark Mode */
+.theme-dark {
+  --theme-background: #0f172a;
+  --theme-foreground: #f8fafc;
+  --theme-surface: #1e293b;
+  --theme-surface-foreground: #f8fafc;
+  --theme-card: #020617;
+  --theme-card-foreground: #f8fafc;
+  --theme-primary: #3b82f6;
+  --theme-primary-foreground: #ffffff;
+  --theme-muted: #94a3b8;
+  --theme-border: #334155;
+  --theme-danger: #ef4444;
+  --theme-success: #22c55e;
+}
+
+/* 5. Sakura Pink */
+.theme-sakura-pink {
+  --theme-background: #fce7f3;
+  --theme-foreground: #831843;
+  --theme-surface: #fbcfe8;
+  --theme-surface-foreground: #831843;
+  --theme-card: #ffffff;
+  --theme-card-foreground: #831843;
+  --theme-primary: #db2777;
+  --theme-primary-foreground: #ffffff;
+  --theme-muted: #9d174d;
+  --theme-border: #f9a8d4;
+  --theme-danger: #e11d48;
+  --theme-success: #059669;
+}
+
+/* 6. Ocean Deep */
+.theme-ocean-deep {
+  --theme-background: #172554;
+  --theme-foreground: #eff6ff;
+  --theme-surface: #1e3a8a;
+  --theme-surface-foreground: #eff6ff;
+  --theme-card: #0a1128;
+  --theme-card-foreground: #eff6ff;
+  --theme-primary: #3b82f6;
+  --theme-primary-foreground: #ffffff;
+  --theme-muted: #bfdbfe;
+  --theme-border: #1e40af;
+  --theme-danger: #f87171;
+  --theme-success: #34d399;
+}
+
+body {
+  background: var(--theme-background);
+  color: var(--theme-foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -70,16 +143,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-dino-300);
+  background-color: var(--theme-surface);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-dino-500);
+  background-color: var(--theme-border);
 }
 
 /* For Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-dino-300) transparent;
+  scrollbar-color: var(--theme-surface) transparent;
 }

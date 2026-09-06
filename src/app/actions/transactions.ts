@@ -70,6 +70,47 @@ export async function addTransaction(data: {
   return { success: true };
 }
 
+export async function deleteTransaction(id: string) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const db = await getDb();
+  if (!db) return { success: false, error: "No DB" };
+
+  await db.delete(transactions).where(and(eq(transactions.id, id), eq(transactions.userId, session.user.id)));
+
+  revalidatePath("/");
+  revalidatePath("/transactions");
+  return { success: true };
+}
+
+export async function updateTransaction(id: string, data: {
+  amount?: number;
+  categoryId?: string;
+  note?: string;
+}) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const db = await getDb();
+  if (!db) return { success: false, error: "No DB" };
+
+  const updateData: any = {};
+  if (data.amount !== undefined) updateData.amount = data.amount;
+  if (data.categoryId !== undefined) updateData.categoryId = data.categoryId || null;
+  if (data.note !== undefined) updateData.note = data.note || null;
+
+  if (Object.keys(updateData).length > 0) {
+    await db.update(transactions)
+      .set(updateData)
+      .where(and(eq(transactions.id, id), eq(transactions.userId, session.user.id)));
+  }
+
+  revalidatePath("/");
+  revalidatePath("/transactions");
+  return { success: true };
+}
+
 export async function getDashboardData() {
   const session = await auth();
   // Mock fallback if not logged in or DB not available
