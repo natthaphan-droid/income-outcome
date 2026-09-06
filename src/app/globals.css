@@ -27,24 +27,27 @@
   --color-beige-900: #3b2e25;
   --color-beige-950: #211913;
 
-  /* Semantic Variables (Minimal Clean Theme) */
-  --color-background: var(--color-dino-50); /* 60% Dominant (Very pale, clean background) */
-  --color-foreground: var(--color-dino-950); /* High contrast dark text */
+  /* Semantic Variables (Strict 60-30-10 Minimal Theme) */
+  /* 60% Dominant (Main Background) */
+  --color-background: var(--color-dino-400); 
+  --color-foreground: var(--color-dino-950); 
   
-  --color-surface: var(--color-dino-100);
+  --color-surface: var(--color-dino-300);
   --color-surface-foreground: var(--color-dino-950);
 
-  --color-card: #ffffff; /* 30% Secondary (Pure white cards for depth) */
+  /* 30% Secondary (Surfaces & Cards) */
+  --color-card: #ffffff; 
   --color-card-foreground: var(--color-dino-950);
 
-  --color-primary: var(--color-dino-400); /* 10% Accent (Signature vibrant green) */
-  --color-primary-foreground: var(--color-dino-950); /* Dark text on bright button for contrast */
+  /* 10% Accent (Buttons & Call to Actions) */
+  --color-primary: var(--color-dino-900); 
+  --color-primary-foreground: #ffffff; 
 
-  --color-muted: #6b7280; /* Standard gray for secondary text */
-  --color-border: #e5e7eb; /* Soft minimal border */
+  --color-muted: var(--color-dino-800); 
+  --color-border: var(--color-dino-500); 
   
   --color-danger: #ef4444;
-  --color-success: var(--color-dino-500);
+  --color-success: var(--color-dino-700);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
