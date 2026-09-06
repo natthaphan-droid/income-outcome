@@ -40,32 +40,32 @@ export default function CategoriesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--background)] flex flex-col">
-      <header className="px-6 py-4 bg-white border-b border-[var(--border)] flex items-center gap-4 sticky top-0 z-10">
-        <button onClick={() => router.back()} className="text-[var(--wood-dark)] p-2 -ml-2 rounded-full hover:bg-[var(--wood-light)]">
+    <div className="min-h-screen bg-background flex flex-col">
+      <header className="px-6 py-4 bg-card text-card-foreground border-b border-border flex items-center gap-4 sticky top-0 z-10">
+        <button onClick={() => router.back()} className="text-foreground p-2 -ml-2 rounded-full hover:bg-surface text-surface-foreground">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
         </button>
-        <h1 className="text-xl font-bold text-[var(--wood-dark)]">จัดการหมวดหมู่และงบ</h1>
+        <h1 className="text-xl font-bold text-foreground">จัดการหมวดหมู่และงบ</h1>
       </header>
 
       <main className="p-6">
         {loading ? (
-          <div className="text-center py-10 text-[var(--muted)]">กำลังโหลด...</div>
+          <div className="text-center py-10 text-muted">กำลังโหลด...</div>
         ) : (
           <div className="space-y-4">
             {categories.filter(c => c.type === 'expense').map(cat => (
-              <div key={cat.id} className="bg-white p-4 rounded-2xl border border-[var(--border)] shadow-sm flex items-center justify-between">
+              <div key={cat.id} className="bg-card text-card-foreground p-4 rounded-2xl border border-border shadow-sm flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[var(--wood-light)] flex items-center justify-center text-[var(--wood-dark)]">
+                  <div className="w-12 h-12 rounded-full bg-surface text-surface-foreground flex items-center justify-center text-foreground">
                     {getIcon(cat.icon)}
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-[var(--foreground)]">{cat.name}</h3>
+                    <h3 className="font-bold text-sm text-foreground">{cat.name}</h3>
                     {editingId === cat.id ? (
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-[var(--muted)] text-sm">฿</span>
+                        <span className="text-muted text-sm">฿</span>
                         <input
                           type="number"
                           value={editAmount}
@@ -75,7 +75,7 @@ export default function CategoriesPage() {
                         />
                       </div>
                     ) : (
-                      <p className="text-xs text-[var(--muted)] mt-1">งบรายเดือน: {cat.budget > 0 ? `฿${cat.budget.toLocaleString()}` : "ไม่ได้ตั้ง"}</p>
+                      <p className="text-xs text-muted mt-1">งบรายเดือน: {cat.budget > 0 ? `฿${cat.budget.toLocaleString()}` : "ไม่ได้ตั้ง"}</p>
                     )}
                   </div>
                 </div>
@@ -84,7 +84,7 @@ export default function CategoriesPage() {
                   {editingId === cat.id ? (
                     <button 
                       onClick={() => handleSaveBudget(cat.id)}
-                      className="px-3 py-1 bg-[var(--wood-dark)] text-white text-xs font-bold rounded-lg"
+                      className="px-3 py-1 bg-primary text-primary-foreground text-white text-xs font-bold rounded-lg"
                     >
                       บันทึก
                     </button>
@@ -94,7 +94,7 @@ export default function CategoriesPage() {
                         setEditingId(cat.id);
                         setEditAmount(cat.budget.toString());
                       }}
-                      className="px-3 py-1 bg-[var(--wood-light)] text-[var(--wood-dark)] text-xs font-bold rounded-lg hover:bg-[var(--wood-base)] hover:text-white transition-colors"
+                      className="px-3 py-1 bg-surface text-surface-foreground text-foreground text-xs font-bold rounded-lg hover:bg-[var(--wood-base)] hover:text-white transition-colors"
                     >
                       ตั้งงบ
                     </button>

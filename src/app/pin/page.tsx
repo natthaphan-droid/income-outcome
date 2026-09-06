@@ -34,15 +34,15 @@ export default function PinPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--wood-light)] p-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden border border-[var(--border)] p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-surface text-surface-foreground p-4">
+      <div className="w-full max-w-sm bg-card text-card-foreground rounded-2xl shadow-xl overflow-hidden border border-border p-8">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-[var(--wood-dark)]">กรอก PIN</h1>
-          <p className="text-[var(--muted)] text-sm mt-2">กรุณากรอกรหัส 6 หลักของคุณ (ทดสอบใช้ 123456)</p>
+          <h1 className="text-2xl font-bold text-foreground">กรอก PIN</h1>
+          <p className="text-muted text-sm mt-2">กรุณากรอกรหัส 6 หลักของคุณ (ทดสอบใช้ 123456)</p>
         </div>
 
         {error && (
-          <div className="mb-4 bg-[var(--danger)]/10 text-[var(--danger)] p-2 rounded-lg text-sm text-center">
+          <div className="mb-4 bg-danger/10 text-danger p-2 rounded-lg text-sm text-center">
             {error}
           </div>
         )}
@@ -63,7 +63,7 @@ export default function PinPage() {
             <button
               key={digit}
               onClick={() => handleDigitClick(digit.toString())}
-              className="w-16 h-16 mx-auto rounded-full bg-[var(--background)] hover:bg-[var(--wood-light)] border border-[var(--border)] text-xl font-medium text-[var(--foreground)] transition-colors"
+              className="w-16 h-16 mx-auto rounded-full bg-background hover:bg-surface text-surface-foreground border border-border text-xl font-medium text-foreground transition-colors"
             >
               {digit}
             </button>
@@ -71,13 +71,13 @@ export default function PinPage() {
           <div /> {/* Empty cell for alignment */}
           <button
             onClick={() => handleDigitClick("0")}
-            className="w-16 h-16 mx-auto rounded-full bg-[var(--background)] hover:bg-[var(--wood-light)] border border-[var(--border)] text-xl font-medium text-[var(--foreground)] transition-colors"
+            className="w-16 h-16 mx-auto rounded-full bg-background hover:bg-surface text-surface-foreground border border-border text-xl font-medium text-foreground transition-colors"
           >
             0
           </button>
           <button
             onClick={handleBackspace}
-            className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-[var(--danger)]/10 hover:bg-[var(--danger)]/20 text-[var(--danger)] transition-colors"
+            className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-danger/10 hover:bg-danger/20 text-danger transition-colors"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
@@ -88,7 +88,7 @@ export default function PinPage() {
         <button
           onClick={handleSubmit}
           disabled={pin.length !== 6 || isPending}
-          className="w-full py-3 bg-[var(--wood-base)] disabled:bg-[var(--border)] disabled:text-[var(--muted)] text-white font-medium rounded-lg hover:bg-[var(--wood-dark)] transition-colors"
+          className="w-full py-3 bg-[var(--wood-base)] disabled:bg-[var(--border)] disabled:text-muted text-white font-medium rounded-lg hover:bg-primary text-primary-foreground transition-colors"
         >
           {isPending ? "กำลังตรวจสอบ..." : "ยืนยัน"}
         </button>
