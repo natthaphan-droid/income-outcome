@@ -5,6 +5,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import { useSession } from "next-auth/react";
 
@@ -15,6 +16,11 @@ export default function SettingsPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editName, setEditName] = useState("");
 
+  // New states for theme modals
+  const [showThemeModal, setShowThemeModal] = useState(false);
+  const [selectedThemePending, setSelectedThemePending] = useState<{id: string, name: string} | null>(null);
+  const [isChangingTheme, setIsChangingTheme] = useState(false);
+
   useEffect(() => {
     setMounted(true);
     if (session?.user?.name) {
@@ -22,14 +28,126 @@ export default function SettingsPage() {
     }
   }, [session]);
 
+  const handleConfirmTheme = () => {
+    if (!selectedThemePending) return;
+    
+    // Hide modal, show loading overlay
+    const targetThemeId = selectedThemePending.id;
+    setSelectedThemePending(null);
+    setIsChangingTheme(true);
+
+    // Fake delay 1.5s
+    setTimeout(() => {
+      setTheme(targetThemeId);
+      // Let it render for 0.5s before hiding loader
+      setTimeout(() => {
+        setIsChangingTheme(false);
+      }, 500);
+    }, 1500);
+  };
+
   const handleSaveProfile = () => {
     // โค้ดสำหรับบันทึกโปรไฟล์จริงๆ จะใส่ตรงนี้ (เช่น เรียก API)
     // สำหรับตอนนี้เราปิด modal ไปก่อน
     setShowEditModal(false);
   };
 
+  const themesList = [
+    { id: 'theme-dino-green', name: 'Dino Green (สีเขียวสดใส)', bg: '#5ec182', border: '#1a422c' },
+    { id: 'theme-minimal-sky', name: 'Minimal Sky (ฟ้าหม่น สะอาดตา)', bg: '#e0f2fe', border: '#0284c7' },
+    { id: 'theme-cozy-wood', name: 'Cozy Wood Cafe (โฮมมี่ อบอุ่น)', bg: '#f5ebe0', border: '#8b5e34' },
+    { id: 'theme-dark', name: 'Dark Mode (โหมดกลางคืน ถนอมสายตา)', bg: '#0f172a', border: '#3b82f6' },
+    { id: 'theme-sakura-pink', name: 'Sakura Pink (ชมพูพาสเทล น่ารัก)', bg: '#fce7f3', border: '#db2777' },
+    { id: 'theme-ocean-deep', name: 'Ocean Deep (น้ำเงินเข้ม สุขุม)', bg: '#172554', border: '#3b82f6' }
+  ];
+
+  const currentThemeId = theme || 'theme-dino-green';
+  const currentThemeData = themesList.find(t => t.id === currentThemeId) || themesList[0];
+
   return (
     <div className="flex flex-col min-h-screen bg-background pb-20 transition-colors duration-300">
+      
+      {/* Full Screen Loading Overlay */}
+      {isChangingTheme && (
+        <div className="fixed inset-0 bg-background flex flex-col items-center justify-center z-[100] animate-in fade-in duration-300">
+          <div className="relative w-48 h-48 animate-bounce-slow">
+            <Image
+              src="/dino-full.jpg"
+              alt="Loading Theme..."
+              fill
+              className="object-contain drop-shadow-xl"
+              priority
+            />
+          </div>
+          <div className="mt-8 text-primary font-bold text-xl animate-pulse">
+            กำลังปรับเปลี่ยนสี...
+          </div>
+        </div>
+      )}
+
+      {/* Theme Selector Modal (List of 6 themes) */}
+      {showThemeModal && (
+        <div 
+          className="fixed inset-0 z-40 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
+          onClick={() => setShowThemeModal(false)}
+        >
+          <div 
+            className="bg-card text-card-foreground w-full max-w-md sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-full sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-300 pb-safe"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-5 border-b border-border flex justify-between items-center">
+              <h2 className="text-lg font-bold">เลือกธีมแอปพลิเคชัน</h2>
+              <button onClick={() => setShowThemeModal(false)} className="p-2 -mr-2 text-muted hover:text-foreground rounded-full transition-colors">
+                <Icons.Plus className="w-6 h-6 rotate-45" />
+              </button>
+            </div>
+            <div className="p-4 max-h-[60vh] overflow-y-auto custom-scrollbar flex flex-col gap-3">
+              {themesList.map((t) => (
+                <button 
+                  key={t.id}
+                  onClick={() => {
+                    setShowThemeModal(false);
+                    if (currentThemeId === t.id) return;
+                    setTimeout(() => setSelectedThemePending({ id: t.id, name: t.name }), 150);
+                  }}
+                  className={`p-4 rounded-2xl border flex items-center justify-between transition-colors ${currentThemeId === t.id ? 'border-[primary] bg-surface text-surface-foreground' : 'border-border bg-background hover:bg-surface/50'}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: t.bg, border: `2px solid ${t.border}` }}></div>
+                    <span className="text-sm font-medium text-foreground">{t.name}</span>
+                  </div>
+                  {currentThemeId === t.id && <Icons.Plus className="w-5 h-5 text-primary rotate-45" />}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      {selectedThemePending && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-card text-card-foreground w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center animate-in zoom-in-95 duration-300">
+            <h2 className="text-xl font-bold mb-3">เปลี่ยนธีมแอปพลิเคชัน?</h2>
+            <p className="text-muted text-sm mb-6">คุณต้องการเปลี่ยนเป็นธีม <b>{selectedThemePending.name}</b> ใช่หรือไม่?</p>
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setSelectedThemePending(null)}
+                className="flex-1 py-3 bg-surface text-surface-foreground rounded-xl font-bold hover:bg-border transition-colors"
+              >
+                ยกเลิก
+              </button>
+              <button 
+                onClick={handleConfirmTheme}
+                className="flex-1 py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:opacity-90 transition-opacity shadow-md"
+              >
+                ยืนยัน
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <header className="px-6 py-6 bg-primary text-primary-foreground shadow-md sticky top-0 z-10">
         <h1 className="text-2xl font-bold text-foreground text-center">ตั้งค่า</h1>
       </header>
@@ -70,30 +188,18 @@ export default function SettingsPage() {
             <h2 className="font-bold text-foreground">ธีมแอปพลิเคชัน</h2>
           </div>
           <div className="p-4">
-            <p className="text-sm text-muted mb-3">เลือกบรรยากาศที่คุณชื่นชอบ</p>
+            <p className="text-sm text-muted mb-3">ธีมที่กำลังใช้งาน</p>
             {mounted && (
-              <div className="flex flex-col gap-3">
-                {[
-                  { id: 'theme-dino-green', name: 'Dino Green (สีเขียวสดใส)', bg: '#5ec182', border: '#1a422c' },
-                  { id: 'theme-minimal-sky', name: 'Minimal Sky (ฟ้าหม่น สะอาดตา)', bg: '#e0f2fe', border: '#0284c7' },
-                  { id: 'theme-cozy-wood', name: 'Cozy Wood Cafe (โฮมมี่ อบอุ่น)', bg: '#f5ebe0', border: '#8b5e34' },
-                  { id: 'theme-dark', name: 'Dark Mode (โหมดกลางคืน ถนอมสายตา)', bg: '#0f172a', border: '#3b82f6' },
-                  { id: 'theme-sakura-pink', name: 'Sakura Pink (ชมพูพาสเทล น่ารัก)', bg: '#fce7f3', border: '#db2777' },
-                  { id: 'theme-ocean-deep', name: 'Ocean Deep (น้ำเงินเข้ม สุขุม)', bg: '#172554', border: '#3b82f6' }
-                ].map((t) => (
-                  <button 
-                    key={t.id}
-                    onClick={() => setTheme(t.id)}
-                    className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${theme === t.id || (!theme && t.id === 'theme-dino-green') ? 'border-[primary] bg-surface text-surface-foreground' : 'border-border bg-background'}`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 rounded-full" style={{ backgroundColor: t.bg, border: `2px solid ${t.border}` }}></div>
-                      <span className={`text-sm font-medium ${theme === t.id || (!theme && t.id === 'theme-dino-green') ? 'text-foreground' : 'text-foreground'}`}>{t.name}</span>
-                    </div>
-                    {(theme === t.id || (!theme && t.id === 'theme-dino-green')) && <Icons.Plus className="w-5 h-5 text-primary rotate-45" />}
-                  </button>
-                ))}
-              </div>
+              <button 
+                onClick={() => setShowThemeModal(true)}
+                className="w-full p-4 rounded-xl border border-border bg-background hover:bg-surface/50 flex items-center justify-between transition-colors shadow-sm"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-full" style={{ backgroundColor: currentThemeData.bg, border: `2px solid ${currentThemeData.border}` }}></div>
+                  <span className="text-sm font-medium text-foreground">{currentThemeData.name}</span>
+                </div>
+                <span className="text-primary text-sm font-bold">เปลี่ยน ›</span>
+              </button>
             )}
           </div>
         </div>

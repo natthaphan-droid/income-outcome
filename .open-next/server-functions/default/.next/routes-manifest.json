@@ -45,10 +45,22 @@
       "namedRegex": "^/add(?:/)?$"
     },
     {
+      "page": "/analyze",
+      "regex": "^/analyze(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/analyze(?:/)?$"
+    },
+    {
       "page": "/api/export",
       "regex": "^/api/export(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/export(?:/)?$"
+    },
+    {
+      "page": "/apple-icon.jpg",
+      "regex": "^/apple\\-icon\\.jpg(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/apple\\-icon\\.jpg(?:/)?$"
     },
     {
       "page": "/categories",
@@ -63,16 +75,22 @@
       "namedRegex": "^/changelog(?:/)?$"
     },
     {
-      "page": "/favicon.ico",
-      "regex": "^/favicon\\.ico(?:/)?$",
+      "page": "/forgot-password",
+      "regex": "^/forgot\\-password(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/favicon\\.ico(?:/)?$"
+      "namedRegex": "^/forgot\\-password(?:/)?$"
     },
     {
       "page": "/_global-error",
       "regex": "^/_global\\-error(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/icon.jpg",
+      "regex": "^/icon\\.jpg(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/icon\\.jpg(?:/)?$"
     },
     {
       "page": "/login",
@@ -105,16 +123,34 @@
       "namedRegex": "^/recurring(?:/)?$"
     },
     {
+      "page": "/register",
+      "regex": "^/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/register(?:/)?$"
+    },
+    {
       "page": "/reports",
       "regex": "^/reports(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/reports(?:/)?$"
     },
     {
+      "page": "/reset-password",
+      "regex": "^/reset\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/reset\\-password(?:/)?$"
+    },
+    {
       "page": "/settings",
       "regex": "^/settings(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/settings(?:/)?$"
+    },
+    {
+      "page": "/transactions",
+      "regex": "^/transactions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/transactions(?:/)?$"
     }
   ],
   "dataRoutes": [],
