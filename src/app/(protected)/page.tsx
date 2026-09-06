@@ -2,6 +2,7 @@ import { Icons } from "@/components/Icons";
 import Link from "next/link";
 import { getDashboardData } from "@/app/actions/transactions";
 import { ExpenseDonutChart } from "@/components/ExpenseDonutChart";
+import { BudgetWarningPopup } from "@/components/BudgetWarningPopup";
 
 export default async function DashboardPage() {
   const data = await getDashboardData();
@@ -52,6 +53,8 @@ export default async function DashboardPage() {
           </div>
         </div>
       </header>
+
+      <BudgetWarningPopup alerts={data.budgetAlerts} />
 
       <main className="flex-1 px-4 py-6">
         {/* Expense Donut Chart */}
