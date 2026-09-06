@@ -107,13 +107,6 @@ export default async function DashboardPage() {
         </section>
       </main>
 
-      {/* Floating Action Button (FAB) */}
-      <Link 
-        href="/add" 
-        className="fixed bottom-24 right-6 w-14 h-14 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform z-40"
-      >
-        <Icons.Plus className="w-6 h-6" />
-      </Link>
     </div>
   );
 }

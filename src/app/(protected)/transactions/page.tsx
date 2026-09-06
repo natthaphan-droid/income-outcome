@@ -14,7 +14,7 @@ export default async function TransactionsPage() {
         <p className="text-sm opacity-90 mt-1">ประวัติการรับ-จ่ายเงินของคุณ</p>
       </header>
 
-      <main className="flex-1 px-4 py-6 pb-24">
+      <main className="flex-1 px-4 py-6 pb-40">
         <div className="space-y-4">
           {/* We assume transactions are already sorted by date desc */}
           {transactions.length > 0 ? (

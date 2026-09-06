@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { addTransaction, getCategories } from "@/app/actions/transactions";
@@ -10,8 +10,26 @@ export default function AddTransactionPage() {
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const [categories, setCategories] = useState<any[]>([]);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  useEffect(() => {
+    // Only fetch for expense and income, saving doesn't have categories right now
+    if (type === "expense" || type === "income") {
+      getCategories(type).then((data) => {
+        setCategories(data);
+        if (data.length > 0) {
+          setCategoryId(data[0].id);
+        } else {
+          setCategoryId("");
+        }
+      });
+    } else {
+      setCategories([]);
+      setCategoryId("");
+    }
+  }, [type]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,24 +111,22 @@ export default function AddTransactionPage() {
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">หมวดหมู่</label>
             <div className="grid grid-cols-4 gap-3">
-              {[
-                { id: "1", icon: <Icons.Food />, label: "อาหาร" },
-                { id: "2", icon: <Icons.Transport />, label: "เดินทาง" },
-                { id: "3", icon: <Icons.Shopping />, label: "ช้อปปิ้ง" },
-                { id: "4", icon: <Icons.Home />, label: "ที่พัก" },
-              ].map((cat) => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setCategoryId(cat.id)}
-                  className="flex flex-col items-center gap-2"
-                >
-                  <div className={`w-14 h-14 bg-card text-card-foreground border ${categoryId === cat.id ? 'border-[foreground] bg-surface text-surface-foreground' : 'border-border'} rounded-2xl flex items-center justify-center text-primary shadow-sm transition-colors`}>
-                    <div className="w-6 h-6">{cat.icon}</div>
-                  </div>
-                  <span className={`text-xs ${categoryId === cat.id ? 'text-foreground font-bold' : 'text-muted'}`}>{cat.label}</span>
-                </button>
-              ))}
+              {categories.map((cat) => {
+                const IconComponent = cat.icon && (Icons as any)[cat.icon] ? (Icons as any)[cat.icon] : Icons.Wallet;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setCategoryId(cat.id)}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    <div className={`w-14 h-14 bg-card text-card-foreground border ${categoryId === cat.id ? 'border-[foreground] bg-surface text-surface-foreground' : 'border-border'} rounded-2xl flex items-center justify-center text-primary shadow-sm transition-colors`}>
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <span className={`text-xs ${categoryId === cat.id ? 'text-foreground font-bold' : 'text-muted'}`}>{cat.name}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 

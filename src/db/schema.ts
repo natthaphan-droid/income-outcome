@@ -5,9 +5,9 @@ export const users = sqliteTable("users", {
   id: text("id").primaryKey(),
   name: text("name"),
   email: text("email").unique(),
-  image: text("image"), // Added for profile picture (can store base64)
   passwordHash: text("password_hash"),
   pinHash: text("pin_hash"),
+  image: text("image"),
   createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
 });
 
