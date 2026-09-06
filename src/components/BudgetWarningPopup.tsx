@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface Alert {
-  categoryName: string;
+  categoryName: string | null;
   limit: number;
   spent: number;
   remaining: number;
