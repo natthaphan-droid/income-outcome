@@ -15,6 +15,13 @@
       "when": 1788665562531,
       "tag": "0001_warm_monster_badoon",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788687842732,
+      "tag": "0002_silky_dark_beast",
+      "breakpoints": true
     }
   ]
 }

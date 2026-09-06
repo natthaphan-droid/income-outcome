@@ -8,14 +8,7 @@ import { TransactionItem } from "@/components/TransactionItem";
 export default async function DashboardPage() {
   const data = await getDashboardData();
   
-  // Dynamic icons mapping
-  const getIcon = (iconName: string | null) => {
-    if (iconName && (Icons as any)[iconName]) {
-      const IconComponent = (Icons as any)[iconName];
-      return <IconComponent className="w-5 h-5" />;
-    }
-    return <Icons.Wallet className="w-5 h-5" />;
-  };
+
 
   return (
     <div className="flex flex-col min-h-screen relative">
