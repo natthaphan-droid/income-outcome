@@ -60,7 +60,7 @@ export function AnalyzeTabs() {
                 <Tooltip 
                   cursor={{ fill: 'var(--surface)' }}
                   contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)', backgroundColor: 'var(--card)', color: 'var(--card-foreground)' }}
-                  formatter={(value: number) => [`฿ ${value.toLocaleString()}`, 'จำนวนเงิน']}
+                  formatter={(value: any) => [`฿ ${value.toLocaleString()}`, 'จำนวนเงิน']}
                 />
                 <Line type="monotone" dataKey="savings" stroke="var(--primary)" strokeWidth={3} dot={{ fill: 'var(--primary)', strokeWidth: 2 }} />
               </LineChart>
@@ -72,7 +72,7 @@ export function AnalyzeTabs() {
                 <Tooltip 
                   cursor={{ fill: 'var(--surface)' }}
                   contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)', backgroundColor: 'var(--card)', color: 'var(--card-foreground)' }}
-                  formatter={(value: number) => [`฿ ${value.toLocaleString()}`, 'จำนวนเงิน']}
+                  formatter={(value: any) => [`฿ ${value.toLocaleString()}`, 'จำนวนเงิน']}
                 />
                 <Bar 
                   dataKey={activeTab} 

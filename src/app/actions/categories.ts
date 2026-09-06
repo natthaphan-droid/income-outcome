@@ -117,7 +117,7 @@ export async function addCategory(name: string, icon: string, type: "income" | "
     name,
     icon,
     type,
-    isDefault: false,
+    
   });
 
   revalidatePath("/categories");
