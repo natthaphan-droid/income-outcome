@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { auth } from "@/auth";
-
+import { BottomNav } from "@/components/BottomNav";
 
 
 export default async function ProtectedLayout({
@@ -22,5 +22,10 @@ export default async function ProtectedLayout({
     redirect("/pin");
   }
 
-  return children;
+  return (
+    <div className="flex flex-col min-h-screen pb-20">
+      {children}
+      <BottomNav />
+    </div>
+  );
 }

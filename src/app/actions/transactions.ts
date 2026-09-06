@@ -79,6 +79,11 @@ export async function getDashboardData() {
     totalExpense: 10500,
     recentTransactions: [],
     budgetAlerts: [],
+    expensesByCategory: [
+      { name: "อาหาร", value: 4500 },
+      { name: "เดินทาง", value: 2000 },
+      { name: "ช้อปปิ้ง", value: 4000 }
+    ],
   };
 
   if (!session?.user?.id) return fallback;
@@ -204,16 +209,40 @@ export async function getDashboardData() {
       }
     }
 
+    // Expense by category for Donut chart
+    const expensesByCategoryRaw = await db
+      .select({
+        categoryName: categories.name,
+        total: sum(transactions.amount).mapWith(Number),
+      })
+      .from(transactions)
+      .leftJoin(categories, eq(transactions.categoryId, categories.id))
+      .where(
+        and(
+          eq(transactions.userId, userId),
+          eq(transactions.type, "expense"),
+          gte(transactions.date, startOfMonth),
+          lt(transactions.date, endOfMonth)
+        )
+      )
+      .groupBy(categories.name);
+      
+    const expensesByCategory = expensesByCategoryRaw.map(e => ({
+      name: e.categoryName || "อื่นๆ",
+      value: e.total,
+    }));
+
     return {
       balance,
       totalIncome,
       totalExpense,
       recentTransactions: recent,
       budgetAlerts,
+      expensesByCategory,
     };
   } catch (error) {
     console.error(error);
-    return fallback;
+    return { ...fallback, expensesByCategory: [] };
   }
 }
 
@@ -239,5 +268,36 @@ export async function getCategories(type?: "income" | "expense") {
       ];
     }
     return [{ id: "4", name: "เงินเดือน", icon: "Wallet", type: "income" }];
+  }
+}
+
+export async function getAllTransactions() {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+
+  try {
+    const db = await getDb();
+    if (!db) return [];
+    const userId = session.user.id;
+
+    const all = await db
+      .select({
+        id: transactions.id,
+        amount: transactions.amount,
+        type: transactions.type,
+        note: transactions.note,
+        date: transactions.date,
+        categoryName: categories.name,
+        categoryIcon: categories.icon,
+      })
+      .from(transactions)
+      .leftJoin(categories, eq(transactions.categoryId, categories.id))
+      .where(eq(transactions.userId, userId))
+      .orderBy(desc(transactions.date));
+
+    return all;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 }

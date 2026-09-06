@@ -100,3 +100,44 @@ export async function setCategoryBudget(categoryId: string, amount: number) {
   revalidatePath("/categories");
   return { success: true };
 }
+
+export async function addCategory(name: string, icon: string, type: "income" | "expense") {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const db = await getDb();
+  if (!db) {
+    revalidatePath("/categories");
+    return { success: true };
+  }
+
+  await db.insert(categories).values({
+    id: crypto.randomUUID(),
+    userId: session.user.id,
+    name,
+    icon,
+    type,
+    isDefault: false,
+  });
+
+  revalidatePath("/categories");
+  revalidatePath("/add");
+  return { success: true };
+}
+
+export async function deleteCategory(id: string) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const db = await getDb();
+  if (!db) {
+    revalidatePath("/categories");
+    return { success: true };
+  }
+
+  await db.delete(categories).where(and(eq(categories.id, id), eq(categories.userId, session.user.id)));
+
+  revalidatePath("/categories");
+  revalidatePath("/add");
+  return { success: true };
+}

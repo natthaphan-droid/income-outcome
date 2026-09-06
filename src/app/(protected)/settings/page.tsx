@@ -60,12 +60,6 @@ export default function SettingsPage() {
             <span className="text-sm font-medium">เปลี่ยนรหัส PIN</span>
             <span className="text-muted">›</span>
           </div>
-          <button 
-            onClick={() => signOut({ callbackUrl: "/login" })}
-            className="w-full text-left p-4 flex items-center justify-between hover:bg-danger/5 transition text-danger"
-          >
-            <span className="text-sm font-medium">ออกจากระบบ</span>
-          </button>
         </div>
 
         <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-sm overflow-hidden">
@@ -88,48 +82,30 @@ export default function SettingsPage() {
           </a>
         </div>
 
-        <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-sm overflow-hidden">
+          <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-sm overflow-hidden">
           <div className="p-4 border-b border-border">
             <h2 className="font-bold text-foreground">เกี่ยวกับแอป</h2>
           </div>
-          <Link href="/changelog" className="block p-4 flex items-center justify-between hover:bg-surface text-surface-foreground/50 transition cursor-pointer">
-            <span className="text-sm font-medium">ประกาศการอัปเดต (Changelog)</span>
-            <span className="text-muted">›</span>
+          <Link href="/changelog" className="block p-4 flex items-center justify-between hover:bg-surface text-surface-foreground/50 transition cursor-pointer border-b border-border">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">มีอะไรใหม่ (Changelog)</span>
+              <span className="w-2 h-2 bg-danger rounded-full inline-block"></span>
+            </div>
+            <span className="text-sm font-bold text-primary">ดูอัปเดต</span>
           </Link>
           <div className="p-4 flex items-center justify-between text-sm">
             <span className="font-medium">เวอร์ชัน</span>
-            <span className="text-muted">1.0.0</span>
+            <span className="text-muted">1.1.0 (อัปเดตใหม่)</span>
           </div>
         </div>
+
+        <button 
+          onClick={() => signOut({ callbackUrl: "/login" })}
+          className="w-full text-center p-4 rounded-2xl bg-danger/10 text-danger font-bold hover:bg-danger/20 transition-colors mt-6"
+        >
+          ออกจากระบบ
+        </button>
       </main>
-
-      {/* Bottom Nav */}
-      <nav className="fixed bottom-0 w-full bg-card text-card-foreground border-t border-border pb-safe pt-2 px-6 flex justify-between items-center shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-20">
-        <Link href="/" className="flex flex-col items-center gap-1 p-2 text-muted">
-          <Icons.Home className="w-6 h-6" />
-          <span className="text-[10px] font-medium">หน้าแรก</span>
-        </Link>
-        <Link href="/reports" className="flex flex-col items-center gap-1 p-2 text-muted">
-          <Icons.Chart className="w-6 h-6" />
-          <span className="text-[10px] font-medium">สรุปผล</span>
-        </Link>
-        
-        {/* Floating Action Button */}
-        <div className="relative -top-6">
-          <Link href="/add" className="w-14 h-14 bg-primary text-primary-foreground text-white rounded-full flex items-center justify-center shadow-lg hover:bg-dino-500 transition-transform hover:scale-105">
-            <Icons.Plus className="w-7 h-7" />
-          </Link>
-        </div>
-
-        <button className="flex flex-col items-center gap-1 p-2 text-muted">
-          <Icons.Wallet className="w-6 h-6" />
-          <span className="text-[10px] font-medium">เป้าหมายออม</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 p-2 text-foreground">
-          <Icons.Settings className="w-6 h-6" />
-          <span className="text-[10px] font-medium">ตั้งค่า</span>
-        </button>
-      </nav>
     </div>
   );
 }
