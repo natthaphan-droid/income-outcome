@@ -20,17 +20,12 @@ async function getDb() {
 
 export async function getCategoriesWithBudgets() {
   const session = await auth();
-  const fallback = [
-    { id: "1", name: "อาหาร", icon: "Food", type: "expense", budget: 5000 },
-    { id: "2", name: "เดินทาง", icon: "Transport", type: "expense", budget: 2000 },
-    { id: "3", name: "ช้อปปิ้ง", icon: "Shopping", type: "expense", budget: 0 },
-  ];
 
-  if (!session?.user?.id) return fallback;
+  if (!session?.user?.id) return [];
 
   try {
     const db = await getDb();
-    if (!db) return fallback;
+    if (!db) return [];
     const userId = session.user.id;
     const now = new Date();
     
@@ -43,18 +38,37 @@ export async function getCategoriesWithBudgets() {
       )
     );
 
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    
+    const { transactions } = await import("@/db/schema");
+    const { gte, lte } = await import("drizzle-orm");
+
+    const currentMonthTx = await db.select().from(transactions).where(
+      and(
+        eq(transactions.userId, userId),
+        gte(transactions.date, startOfMonth),
+        lte(transactions.date, endOfMonth)
+      )
+    );
+
     const merged = cats.map(c => {
       const b = activeBudgets.find(ab => ab.categoryId === c.id);
+      const spent = currentMonthTx
+        .filter(t => t.categoryId === c.id && t.type === 'expense')
+        .reduce((sum, t) => sum + t.amount, 0);
+        
       return {
         ...c,
-        budget: b?.amount || 0
+        budget: b?.amount || 0,
+        spent: spent
       };
     });
 
-    return merged.length > 0 ? merged : fallback;
+    return merged;
   } catch (e) {
     console.error(e);
-    return fallback;
+    return [];
   }
 }
 

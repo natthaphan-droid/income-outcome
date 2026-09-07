@@ -2,21 +2,29 @@
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
-const data = [
-  { name: 'ม.ค.', income: 40000, expense: 24000, savings: 16000 },
-  { name: 'ก.พ.', income: 35000, expense: 22000, savings: 13000 },
-  { name: 'มี.ค.', income: 42000, expense: 28000, savings: 14000 },
-  { name: 'เม.ย.', income: 38000, expense: 25000, savings: 13000 },
-  { name: 'พ.ค.', income: 45000, expense: 30000, savings: 15000 },
-  { name: 'มิ.ย.', income: 39000, expense: 21000, savings: 18000 },
-];
+interface AnalyzeTabsProps {
+  data: {
+    name: string;
+    income: number;
+    expense: number;
+    savings: number;
+  }[];
+}
 
-// Summary cards data
-const totalIncome = data.reduce((sum, d) => sum + d.income, 0);
-const totalExpense = data.reduce((sum, d) => sum + d.expense, 0);
-const totalSavings = data.reduce((sum, d) => sum + d.savings, 0);
+export function AnalyzeTabs({ data }: AnalyzeTabsProps) {
+  if (!data || data.length === 0) {
+    return (
+      <div className="text-center p-10 bg-card rounded-2xl border border-border">
+        <p className="text-muted text-sm">ยังไม่มีข้อมูลรายรับ-รายจ่าย</p>
+        <p className="text-muted text-xs mt-1">เริ่มบันทึกรายการเพื่อดูการวิเคราะห์</p>
+      </div>
+    );
+  }
 
-export function AnalyzeTabs() {
+  // Summary cards data
+  const totalIncome = data.reduce((sum, d) => sum + d.income, 0);
+  const totalExpense = data.reduce((sum, d) => sum + d.expense, 0);
+  const totalSavings = data.reduce((sum, d) => sum + d.savings, 0);
   return (
     <div className="flex flex-col h-full">
       {/* Summary Cards */}

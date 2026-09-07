@@ -113,25 +113,20 @@ export async function updateTransaction(id: string, data: {
 
 export async function getDashboardData() {
   const session = await auth();
-  // Mock fallback if not logged in or DB not available
-  const fallback = {
-    balance: 24500,
-    totalIncome: 35000,
-    totalExpense: 10500,
+  const emptyData = {
+    balance: 0,
+    totalIncome: 0,
+    totalExpense: 0,
     recentTransactions: [],
     budgetAlerts: [],
-    expensesByCategory: [
-      { name: "อาหาร", value: 4500 },
-      { name: "เดินทาง", value: 2000 },
-      { name: "ช้อปปิ้ง", value: 4000 }
-    ],
+    expensesByCategory: [],
   };
 
-  if (!session?.user?.id) return fallback;
+  if (!session?.user?.id) return emptyData;
 
   try {
     const db = await getDb();
-    if (!db) return fallback;
+    if (!db) return emptyData;
     const userId = session.user.id;
 
     // Get current month date range
@@ -269,7 +264,7 @@ export async function getDashboardData() {
       .groupBy(categories.name);
       
     const expensesByCategory = expensesByCategoryRaw.map(e => ({
-      name: e.categoryName || "อื่นๆ",
+      name: e.categoryName || "เธญเธทเนเธเน",
       value: e.total,
     }));
 
@@ -283,7 +278,7 @@ export async function getDashboardData() {
     };
   } catch (error) {
     console.error(error);
-    return { ...fallback, expensesByCategory: [] };
+    return emptyData;
   }
 }
 
@@ -303,12 +298,12 @@ export async function getCategories(type?: "income" | "expense") {
     // Return mock categories for UI if DB fails
     if (type === "expense" || !type) {
       return [
-        { id: "1", name: "อาหาร", icon: "Food", type: "expense" },
-        { id: "2", name: "เดินทาง", icon: "Transport", type: "expense" },
-        { id: "3", name: "ช้อปปิ้ง", icon: "Shopping", type: "expense" },
+        { id: "1", name: "เธญเธฒเธซเธฒเธฃ", icon: "Food", type: "expense" },
+        { id: "2", name: "เน€เธ”เธดเธเธ—เธฒเธ", icon: "Transport", type: "expense" },
+        { id: "3", name: "เธเนเธญเธเธเธดเนเธ", icon: "Shopping", type: "expense" },
       ];
     }
-    return [{ id: "4", name: "เงินเดือน", icon: "Wallet", type: "income" }];
+    return [{ id: "4", name: "เน€เธเธดเธเน€เธ”เธทเธญเธ", icon: "Wallet", type: "income" }];
   }
 }
 
@@ -337,6 +332,83 @@ export async function getAllTransactions() {
       .orderBy(desc(transactions.date));
 
     return all;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getMonthlyAnalysisData() {
+  const session = await auth();
+
+  if (!session?.user?.id) return [];
+
+  try {
+    const db = await getDb();
+    if (!db) return [];
+    const userId = session.user.id;
+
+    // Get date 6 months ago
+    const now = new Date();
+    const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1);
+    const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    const rawTx = await db
+      .select({
+        amount: transactions.amount,
+        type: transactions.type,
+        date: transactions.date,
+      })
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.userId, userId),
+          gte(transactions.date, sixMonthsAgo),
+          lt(transactions.date, startOfNextMonth)
+        )
+      );
+
+    // Thai month abbreviations
+    const thaiMonths = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+
+    // Initialize the last 6 months array
+    const monthsData: Record<string, { name: string; income: number; expense: number; savings: number; sortKey: number }> = {};
+    
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+      monthsData[monthStr] = {
+        name: thaiMonths[d.getMonth()],
+        income: 0,
+        expense: 0,
+        savings: 0,
+        sortKey: d.getTime()
+      };
+    }
+
+    for (const tx of rawTx) {
+      const txDate = new Date(tx.date);
+      const monthStr = txDate.getFullYear() + '-' + String(txDate.getMonth() + 1).padStart(2, '0');
+      if (monthsData[monthStr]) {
+        if (tx.type === 'income') {
+          monthsData[monthStr].income += Number(tx.amount);
+        } else if (tx.type === 'expense') {
+          monthsData[monthStr].expense += Number(tx.amount);
+        }
+      }
+    }
+
+    const result = Object.values(monthsData)
+      .sort((a, b) => a.sortKey - b.sortKey)
+      .map(m => ({
+        name: m.name,
+        income: m.income,
+        expense: m.expense,
+        savings: m.income - m.expense
+      }));
+
+    return result;
+
   } catch (error) {
     console.error(error);
     return [];

@@ -1,6 +1,9 @@
 import { AnalyzeTabs } from "@/components/AnalyzeTabs";
+import { getMonthlyAnalysisData } from "@/app/actions/transactions";
 
-export default function AnalyzePage() {
+export default async function AnalyzePage() {
+  const data = await getMonthlyAnalysisData();
+
   return (
     <div className="flex flex-col min-h-screen relative bg-background">
       {/* Header */}
@@ -10,7 +13,7 @@ export default function AnalyzePage() {
       </header>
 
       <main className="flex-1 px-4 py-6">
-        <AnalyzeTabs />
+        <AnalyzeTabs data={data} />
       </main>
     </div>
   );

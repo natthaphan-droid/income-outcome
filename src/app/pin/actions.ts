@@ -10,11 +10,11 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 async function getDb() {
-  let env;
+  let env: any = {};
   try {
     env = getCloudflareContext().env;
   } catch (e) {
-    console.warn("Could not get Cloudflare env");
+    env = process.env;
   }
   if (!env?.DB) return null;
   return createDb(env as any);
@@ -42,17 +42,7 @@ export async function verifyPin(pin: string) {
 
   const db = await getDb();
   if (!db) {
-    // Fallback logic for dev without DB
-    if (pin === "123456") {
-      const cookieStore = await cookies();
-      cookieStore.set("pin_verified", "true", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-      });
-      return { success: true };
-    }
-    return { error: "DB Error" };
+    return { error: "DB Connection Error" };
   }
 
   const user = await db.select().from(users).where(eq(users.id, session.user.id));

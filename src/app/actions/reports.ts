@@ -21,36 +21,21 @@ async function getDb() {
 export async function getReportData(period: "day" | "week" | "month" | "year") {
   const session = await auth();
   
-  // Dummy data fallback
-  const fallback = {
-    balance: 14500,
-    income: 24000,
-    expense: 9500,
-    chartData: [
-      { name: "จ.", income: 4000, expense: 2400 },
-      { name: "อ.", income: 3000, expense: 1398 },
-      { name: "พ.", income: 2000, expense: 9800 },
-      { name: "พฤ.", income: 2780, expense: 3908 },
-      { name: "ศ.", income: 1890, expense: 4800 },
-      { name: "ส.", income: 2390, expense: 3800 },
-      { name: "อา.", income: 3490, expense: 4300 },
-    ],
-    topExpenses: [
-      { name: "อาหาร", amount: 4500, percent: 47, icon: "Food" },
-      { name: "เดินทาง", amount: 2000, percent: 21, icon: "Transport" },
-      { name: "ช้อปปิ้ง", amount: 3000, percent: 32, icon: "Shopping" },
-    ]
+  const emptyData = {
+    balance: 0,
+    income: 0,
+    expense: 0,
+    chartData: [],
+    topExpenses: []
   };
 
-  if (!session?.user?.id) return fallback;
+  if (!session?.user?.id) return emptyData;
 
   try {
     const db = await getDb();
-    if (!db) return fallback;
+    if (!db) return emptyData;
     const userId = session.user.id;
     
-    // In a real app, calculate date ranges based on 'period'
-    // Here we will just fetch the last 30 days to simplify
     const now = new Date();
     const startDate = new Date(now);
     startDate.setDate(startDate.getDate() - 30);
@@ -76,15 +61,12 @@ export async function getReportData(period: "day" | "week" | "month" | "year") {
     let totalIncome = 0;
     let totalExpense = 0;
     
-    // Process data for charts
-    const chartMap = new Map();
     const expensesByCategory = new Map();
     
     for (const tx of txs) {
       if (tx.type === "income") totalIncome += tx.amount;
       if (tx.type === "expense") totalExpense += tx.amount;
       
-      // Top expenses
       if (tx.type === "expense") {
         const catName = tx.categoryName || "อื่นๆ";
         const currentCat = expensesByCategory.get(catName) || { amount: 0, icon: tx.categoryIcon || "Wallet" };
@@ -92,11 +74,7 @@ export async function getReportData(period: "day" | "week" | "month" | "year") {
         expensesByCategory.set(catName, currentCat);
       }
     }
-    
-    // If no data, return fallback for demo
-    if (totalIncome === 0 && totalExpense === 0) return fallback;
 
-    // Sort top expenses
     const topExpenses = Array.from(expensesByCategory.entries())
       .map(([name, data]: any) => ({
         name,
@@ -111,11 +89,11 @@ export async function getReportData(period: "day" | "week" | "month" | "year") {
       balance: totalIncome - totalExpense,
       income: totalIncome,
       expense: totalExpense,
-      chartData: fallback.chartData, // Keep dummy chart for beautiful visual until full aggregation logic is added
-      topExpenses: topExpenses.length > 0 ? topExpenses : fallback.topExpenses
+      chartData: [],
+      topExpenses
     };
   } catch (error) {
     console.error(error);
-    return fallback;
+    return emptyData;
   }
 }

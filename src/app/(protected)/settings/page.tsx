@@ -8,13 +8,15 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { useSession } from "next-auth/react";
+import { updateProfile } from "@/app/actions/user";
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const [mounted, setMounted] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editName, setEditName] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   // New states for theme modals
   const [showThemeModal, setShowThemeModal] = useState(false);
@@ -46,10 +48,21 @@ export default function SettingsPage() {
     }, 1500);
   };
 
-  const handleSaveProfile = () => {
-    // โค้ดสำหรับบันทึกโปรไฟล์จริงๆ จะใส่ตรงนี้ (เช่น เรียก API)
-    // สำหรับตอนนี้เราปิด modal ไปก่อน
-    setShowEditModal(false);
+  const handleSaveProfile = async () => {
+    setIsSaving(true);
+    try {
+      const result = await updateProfile({ name: editName });
+      if (result.success) {
+        await update({ name: editName });
+        setShowEditModal(false);
+      } else {
+        alert(result.error || "Failed to save profile");
+      }
+    } catch (e) {
+      alert("Error saving profile");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const themesList = [
@@ -158,11 +171,11 @@ export default function SettingsPage() {
           <div className="absolute top-0 left-0 right-0 h-16 bg-primary/20"></div>
           <div className="p-6 pt-8 relative flex flex-col items-center text-center">
             <div className="relative mb-4">
-              <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-card shadow-sm bg-surface flex items-center justify-center">
+              <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-card shadow-sm bg-primary text-primary-foreground flex items-center justify-center text-4xl font-bold">
                 {session?.user?.image ? (
                   <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
-                  <Icons.User className="w-12 h-12 text-muted" />
+                  <span>{session?.user?.name ? session.user.name.charAt(0).toUpperCase() : "U"}</span>
                 )}
               </div>
             </div>
@@ -208,10 +221,10 @@ export default function SettingsPage() {
           <div className="p-4 border-b border-border">
             <h2 className="font-bold text-foreground">บัญชี</h2>
           </div>
-          <div className="p-4 flex items-center justify-between hover:bg-surface text-surface-foreground/50 transition cursor-pointer">
-            <span className="text-sm font-medium">เปลี่ยนรหัส PIN</span>
+          <Link href="/pin" className="block p-4 flex items-center justify-between hover:bg-surface text-surface-foreground/50 transition cursor-pointer">
+            <span className="text-sm font-medium">ตั้งค่า / เปลี่ยนรหัส PIN</span>
             <span className="text-muted">›</span>
-          </div>
+          </Link>
         </div>
 
         <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-sm overflow-hidden">
@@ -264,33 +277,21 @@ export default function SettingsPage() {
         <div 
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={(e) => {
-            if (e.target === e.currentTarget) setShowEditModal(false);
+            if (e.target === e.currentTarget && !isSaving) setShowEditModal(false);
           }}
         >
           <div className="bg-card text-card-foreground rounded-3xl shadow-xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             <div className="p-5 border-b border-border flex items-center justify-between">
               <h2 className="text-lg font-bold">แก้ไขโปรไฟล์</h2>
               <button 
-                onClick={() => setShowEditModal(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface text-muted transition-colors"
+                onClick={() => !isSaving && setShowEditModal(false)}
+                disabled={isSaving}
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface text-muted transition-colors disabled:opacity-50"
               >
                 ✕
               </button>
             </div>
             <div className="p-6 flex flex-col items-center">
-              <div className="relative group cursor-pointer mb-6">
-                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-border bg-surface flex items-center justify-center transition-opacity group-hover:opacity-80">
-                  {session?.user?.image ? (
-                    <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
-                  ) : (
-                    <Icons.User className="w-12 h-12 text-muted" />
-                  )}
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 rounded-full transition-opacity">
-                  <Icons.Camera className="w-8 h-8 text-white" />
-                </div>
-              </div>
-              
               <div className="w-full space-y-4">
                 <div>
                   <label className="block text-xs font-semibold text-muted mb-1.5">ชื่อที่แสดง</label>
@@ -298,7 +299,8 @@ export default function SettingsPage() {
                     type="text" 
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
-                    className="w-full bg-surface text-foreground px-4 py-3 rounded-xl border border-border focus:border-primary outline-none transition-colors"
+                    disabled={isSaving}
+                    className="w-full bg-surface text-foreground px-4 py-3 rounded-xl border border-border focus:border-primary outline-none transition-colors disabled:opacity-50"
                     placeholder="ชื่อของคุณ"
                   />
                 </div>
@@ -316,15 +318,21 @@ export default function SettingsPage() {
             <div className="p-4 px-6 border-t border-border flex gap-3">
               <button 
                 onClick={() => setShowEditModal(false)}
-                className="flex-1 py-3 bg-surface hover:bg-border rounded-xl font-bold transition-colors"
+                disabled={isSaving}
+                className="flex-1 py-3 bg-surface hover:bg-border rounded-xl font-bold transition-colors disabled:opacity-50"
               >
                 ยกเลิก
               </button>
               <button 
                 onClick={handleSaveProfile}
-                className="flex-1 py-3 bg-primary text-primary-foreground hover:bg-primary/90 text-white rounded-xl font-bold transition-colors"
+                disabled={isSaving}
+                className="flex-1 py-3 bg-primary text-primary-foreground hover:bg-primary/90 text-white rounded-xl font-bold transition-colors flex items-center justify-center disabled:opacity-50"
               >
-                บันทึก
+                {isSaving ? (
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                ) : (
+                  "บันทึก"
+                )}
               </button>
             </div>
           </div>
